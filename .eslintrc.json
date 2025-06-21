@@ -1,0 +1,7 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "no-unused-vars": "off", // Отключение правила "неиспользуемые переменные"
+    "react/prop-types": "off" // Отключение проверки типов props в компонентах React
+  }
+}
