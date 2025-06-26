@@ -3,163 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Shop - Your Ultimate Shopping Destination</title>
+    <title>TechShop Pro - Premium Electronics Store</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Premium Shop</span>
-                </div>
-                
-                <div class="search-bar">
-                    <input type="text" placeholder="Search products..." id="searchInput">
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-                
-                <div class="header-actions">
-                    <div class="user-info" id="userInfo" style="display: none;">
-                        <i class="fas fa-user"></i>
-                        <span id="userName"></span>
-                    </div>
-                    
-                    <div class="cart-icon" id="cartIcon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Discover Premium Products</h1>
-                    <p>Shop the latest trends with unbeatable quality and prices</p>
-                    <button class="cta-button">Shop Now</button>
-                </div>
-                <div class="hero-image">
-                    <img src="/placeholder.svg?height=400&width=600" alt="Hero Image">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="categories">
-        <div class="container">
-            <h2>Shop by Category</h2>
-            <div class="category-grid">
-                <div class="category-item">
-                    <i class="fas fa-tshirt"></i>
-                    <span>Fashion</span>
-                </div>
-                <div class="category-item">
-                    <i class="fas fa-laptop"></i>
-                    <span>Electronics</span>
-                </div>
-                <div class="category-item">
-                    <i class="fas fa-home"></i>
-                    <span>Home & Garden</span>
-                </div>
-                <div class="category-item">
-                    <i class="fas fa-dumbbell"></i>
-                    <span>Sports</span>
-                </div>
-                <div class="category-item">
-                    <i class="fas fa-book"></i>
-                    <span>Books</span>
-                </div>
-                <div class="category-item">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Gaming</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="products">
-        <div class="container">
-            <h2>Featured Products</h2>
-            <div class="products-grid" id="productsGrid">
-                <!-- Products will be loaded dynamically -->
-            </div>
-        </div>
-    </section>
-
     <!-- Registration Modal -->
-    <div class="modal" id="registrationModal">
+    <div id="registrationModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Welcome to Premium Shop</h2>
-                <p>Please register to continue shopping</p>
+                <h2>Welcome to TechShop Pro</h2>
+                <p>Please register to access our premium products</p>
             </div>
             <form id="registrationForm">
                 <div class="form-group">
                     <label for="userName">Full Name</label>
-                    <input type="text" id="userNameInput" required>
+                    <input type="text" id="userName" name="userName" required>
                 </div>
                 <div class="form-group">
                     <label for="userPhone">Phone Number</label>
-                    <input type="tel" id="userPhoneInput" required>
+                    <input type="tel" id="userPhone" name="userPhone" required>
                 </div>
-                <button type="submit" class="submit-btn">Register & Continue</button>
+                <button type="submit" class="btn-primary">Register & Continue</button>
             </form>
         </div>
     </div>
 
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Shopping Cart</h2>
-                <button class="close-btn" id="closeCart">
-                    <i class="fas fa-times"></i>
-                </button>
+    <!-- Main Website -->
+    <div id="mainSite" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-top">
+                    <div class="logo">
+                        <h1>TechShop<span>Pro</span></h1>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search products..." id="searchInput">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="header-actions">
+                        <div class="user-info">
+                            <i class="fas fa-user"></i>
+                            <span id="userNameDisplay"></span>
+                        </div>
+                        <div class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </div>
+                    </div>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#" class="nav-link active">Catalog</a></li>
+                        <li><a href="#" class="nav-link">Gaming</a></li>
+                        <li><a href="#" class="nav-link">Audio</a></li>
+                        <li><a href="#" class="nav-link">Keyboards</a></li>
+                        <li><a href="#" class="nav-link">Accessories</a></li>
+                        <li><a href="#" class="nav-link">All Brands</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2>Premium Gaming Gear</h2>
+                        <h3>HyperX Cloud Series</h3>
+                        <p class="hero-price">from <span>$199.99</span></p>
+                        <button class="btn-hero">Explore Collection</button>
+                    </div>
+                    <div class="hero-image">
+                        <img src="/placeholder.svg?height=400&width=500" alt="Featured Product">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Sidebar -->
+        <div id="cartSidebar" class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button id="closeCart" class="close-cart">&times;</button>
             </div>
             <div class="cart-items" id="cartItems">
-                <!-- Cart items will be loaded dynamically -->
+                <!-- Cart items will be displayed here -->
             </div>
             <div class="cart-footer">
                 <div class="cart-total">
                     <strong>Total: $<span id="cartTotal">0.00</span></strong>
                 </div>
-                <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+                <button id="placeOrderBtn" class="btn-primary btn-full">Place Order</button>
             </div>
         </div>
-    </div>
 
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-content product-modal-content">
-            <button class="close-btn" id="closeProductModal">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="product-details" id="productDetails">
-                <!-- Product details will be loaded dynamically -->
-            </div>
-        </div>
+        <!-- Cart Overlay -->
+        <div id="cartOverlay" class="cart-overlay"></div>
     </div>
 
     <!-- Loading Spinner -->
-    <div class="loading" id="loading">
+    <div id="loadingSpinner" class="loading-spinner">
         <div class="spinner"></div>
+        <p>Loading...</p>
     </div>
-
-    <!-- Toast Notifications -->
-    <div class="toast" id="toast"></div>
 
     <!-- Firebase SDK -->
     <script type="module" src="firebase-config.js"></script>

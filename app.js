@@ -1,3 +1,4 @@
+import { db } from "./firebase-config.js"
 import {
   collection,
   addDoc,
@@ -5,37 +6,39 @@ import {
   doc,
   updateDoc,
   increment,
-  arrayUnion,
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
-
-// Telegram Bot Configuration
-const TELEGRAM_BOT_TOKEN = "8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw"
-const TELEGRAM_CHAT_ID = "7702025887"
 
 // Global variables
 let currentUser = null
 let cart = []
 let products = []
 
+// Telegram Bot Configuration
+const TELEGRAM_BOT_TOKEN = "8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw"
+const TELEGRAM_CHAT_ID = "7702025887"
+
 // DOM Elements
 const registrationModal = document.getElementById("registrationModal")
-const cartModal = document.getElementById("cartModal")
-const productModal = document.getElementById("productModal")
-const userInfo = document.getElementById("userInfo")
-const userName = document.getElementById("userName")
+const mainSite = document.getElementById("mainSite")
+const loadingSpinner = document.getElementById("loadingSpinner")
+const registrationForm = document.getElementById("registrationForm")
+const userNameDisplay = document.getElementById("userNameDisplay")
+const productsGrid = document.getElementById("productsGrid")
 const cartIcon = document.getElementById("cartIcon")
+const cartSidebar = document.getElementById("cartSidebar")
+const cartOverlay = document.getElementById("cartOverlay")
+const closeCart = document.getElementById("closeCart")
+const cartItems = document.getElementById("cartItems")
 const cartCount = document.getElementById("cartCount")
-const loading = document.getElementById("loading")
-const toast = document.getElementById("toast")
+const cartTotal = document.getElementById("cartTotal")
+const placeOrderBtn = document.getElementById("placeOrderBtn")
 
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
   checkUserRegistration()
   setupEventListeners()
-  if (currentUser) {
-    loadProducts()
-  }
+  loadProducts()
 })
 
 // Check if user is already registered
@@ -43,98 +46,87 @@ function checkUserRegistration() {
   const userData = localStorage.getItem("userData")
   if (userData) {
     currentUser = JSON.parse(userData)
-    showUserInfo()
-    loadProducts()
+    showMainSite()
   } else {
     showRegistrationModal()
   }
 }
 
-// Show user info in header
-function showUserInfo() {
-  userInfo.style.display = "flex"
-  userName.textContent = currentUser.name
-}
-
 // Show registration modal
 function showRegistrationModal() {
-  registrationModal.classList.add("active")
+  hideLoadingSpinner()
+  registrationModal.style.display = "flex"
+  mainSite.style.display = "none"
+}
+
+// Show main site
+function showMainSite() {
+  hideLoadingSpinner()
+  registrationModal.style.display = "none"
+  mainSite.style.display = "block"
+  userNameDisplay.textContent = currentUser.name
+  loadCartFromStorage()
+}
+
+// Hide loading spinner
+function hideLoadingSpinner() {
+  loadingSpinner.style.display = "none"
 }
 
 // Setup event listeners
 function setupEventListeners() {
-  // Registration form
-  document.getElementById("registrationForm").addEventListener("submit", handleRegistration)
-
-  // Cart icon
-  cartIcon.addEventListener("click", showCart)
-
-  // Close buttons
-  document.getElementById("closeCart").addEventListener("click", () => {
-    cartModal.classList.remove("active")
-  })
-
-  document.getElementById("closeProductModal").addEventListener("click", () => {
-    productModal.classList.remove("active")
-  })
-
-  // Place order button
-  document.getElementById("placeOrderBtn").addEventListener("click", placeOrder)
-
-  // Search functionality
-  document.getElementById("searchInput").addEventListener("input", handleSearch)
-
-  // Close modals when clicking outside
-  window.addEventListener("click", (e) => {
-    if (e.target.classList.contains("modal")) {
-      e.target.classList.remove("active")
-    }
-  })
+  registrationForm.addEventListener("submit", handleRegistration)
+  cartIcon.addEventListener("click", toggleCart)
+  closeCart.addEventListener("click", toggleCart)
+  cartOverlay.addEventListener("click", toggleCart)
+  placeOrderBtn.addEventListener("click", handlePlaceOrder)
 }
 
 // Handle user registration
 async function handleRegistration(e) {
   e.preventDefault()
 
-  const name = document.getElementById("userNameInput").value.trim()
-  const phone = document.getElementById("userPhoneInput").value.trim()
+  const formData = new FormData(e.target)
+  const userData = {
+    name: formData.get("userName").trim(),
+    phone: formData.get("userPhone").trim(),
+    registeredAt: new Date().toISOString(),
+  }
 
-  if (!name || !phone) {
-    showToast("Please fill in all fields", "error")
+  if (!userData.name || !userData.phone) {
+    alert("Please fill in all fields")
     return
   }
 
-  showLoading(true)
+  showLoadingSpinner()
 
   try {
-    const userData = { name, phone, registeredAt: new Date() }
-
-    // Save to Firebase
-    await addDoc(collection(window.db, "users"), userData)
+    // Save to Firebase Firestore
+    await addDoc(collection(db, "users"), userData)
 
     // Save to localStorage
     localStorage.setItem("userData", JSON.stringify(userData))
 
-    // Send to Telegram
-    await sendToTelegram(`🆕 New User Registered\n👤 Name: ${name}\n📱 Phone: ${phone}`)
+    // Send to Telegram Bot
+    await sendToTelegramBot(userData)
 
     currentUser = userData
-    registrationModal.classList.remove("active")
-    showUserInfo()
-    loadProducts()
-    showToast("Registration successful! Welcome to Premium Shop!")
+    showMainSite()
   } catch (error) {
     console.error("Registration error:", error)
-    showToast("Registration failed. Please try again.", "error")
-  } finally {
-    showLoading(false)
+    alert("Registration failed. Please try again.")
+    hideLoadingSpinner()
   }
 }
 
-// Send message to Telegram
-async function sendToTelegram(message) {
+// Send registration data to Telegram Bot
+async function sendToTelegramBot(userData) {
+  const message = `🆕 New User Registered\n👤 Name: ${userData.name}\n📱 Phone: ${userData.phone}`
+
+  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+
   try {
-    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    await fetch(telegramUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -145,104 +137,91 @@ async function sendToTelegram(message) {
         parse_mode: "HTML",
       }),
     })
-
-    if (!response.ok) {
-      throw new Error("Failed to send telegram message")
-    }
   } catch (error) {
-    console.error("Telegram error:", error)
+    console.error("Telegram notification error:", error)
+    // Don't block registration if Telegram fails
   }
 }
 
 // Load products from Firebase
 async function loadProducts() {
-  showLoading(true)
-
   try {
     // First, seed some sample products if collection is empty
     await seedSampleProducts()
 
     // Listen for real-time updates
-    const unsubscribe = onSnapshot(collection(window.db, "products"), (snapshot) => {
+    const unsubscribe = onSnapshot(collection(db, "products"), (snapshot) => {
       products = []
       snapshot.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() })
       })
-      displayProducts(products)
+      displayProducts()
     })
   } catch (error) {
     console.error("Error loading products:", error)
-    showToast("Failed to load products", "error")
-  } finally {
-    showLoading(false)
+    displayProducts() // Show empty state or cached products
   }
 }
 
 // Seed sample products
 async function seedSampleProducts() {
   try {
-    const productsSnapshot = await getDocs(collection(window.db, "products"))
+    const productsSnapshot = await getDocs(collection(db, "products"))
 
     if (productsSnapshot.empty) {
       const sampleProducts = [
         {
-          name: "Premium Wireless Headphones",
+          name: "HyperX Cloud III Red Wireless",
+          brand: "HyperX",
           price: 199.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "High-quality wireless headphones with noise cancellation and premium sound quality.",
-          category: "Electronics",
           likes: 0,
           comments: [],
         },
         {
-          name: "Smart Fitness Watch",
-          price: 299.99,
+          name: "Razer BlackWidow V3 Pro",
+          brand: "Razer",
+          price: 229.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "Advanced fitness tracking with heart rate monitoring and GPS functionality.",
-          category: "Electronics",
           likes: 0,
           comments: [],
         },
         {
-          name: "Designer Backpack",
-          price: 89.99,
+          name: "Logitech G Pro X Superlight",
+          brand: "Logitech",
+          price: 149.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "Stylish and functional backpack perfect for work, travel, or everyday use.",
-          category: "Fashion",
           likes: 0,
           comments: [],
         },
         {
-          name: "Organic Coffee Beans",
-          price: 24.99,
+          name: "SteelSeries Arctis 7P",
+          brand: "SteelSeries",
+          price: 179.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "Premium organic coffee beans sourced from sustainable farms.",
-          category: "Food",
           likes: 0,
           comments: [],
         },
         {
-          name: "Yoga Mat Pro",
-          price: 49.99,
+          name: "Corsair K95 RGB Platinum",
+          brand: "Corsair",
+          price: 199.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "Professional-grade yoga mat with superior grip and comfort.",
-          category: "Sports",
           likes: 0,
           comments: [],
         },
         {
-          name: "Bluetooth Speaker",
-          price: 79.99,
+          name: "ASUS ROG Strix Scope",
+          brand: "ASUS",
+          price: 129.99,
           image: "/placeholder.svg?height=300&width=300",
-          description: "Portable Bluetooth speaker with 360-degree sound and waterproof design.",
-          category: "Electronics",
           likes: 0,
           comments: [],
         },
       ]
 
       for (const product of sampleProducts) {
-        await addDoc(collection(window.db, "products"), product)
+        await addDoc(collection(db, "products"), product)
       }
     }
   } catch (error) {
@@ -251,273 +230,282 @@ async function seedSampleProducts() {
 }
 
 // Display products
-function displayProducts(productsToShow) {
-  const productsGrid = document.getElementById("productsGrid")
+function displayProducts() {
+  if (!productsGrid) return
+
   productsGrid.innerHTML = ""
 
-  productsToShow.forEach((product) => {
+  products.forEach((product) => {
     const productCard = createProductCard(product)
     productsGrid.appendChild(productCard)
   })
 }
 
-// Create product card
+// Create product card element
 function createProductCard(product) {
   const card = document.createElement("div")
   card.className = "product-card"
+
   card.innerHTML = `
-        <div class="product-image">
-            <img src="${product.image}" alt="${product.name}">
+        <img src="${product.image}" alt="${product.name}" class="product-image">
+        <div class="product-brand">${product.brand}</div>
+        <h3 class="product-name">${product.name}</h3>
+        <div class="product-price">$${product.price.toFixed(2)}</div>
+        <div class="product-actions">
+            <button class="btn-add-cart" onclick="addToCart('${product.id}')">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+            </button>
+            <button class="product-like ${product.userLiked ? "liked" : ""}" onclick="toggleLike('${product.id}')">
+                <i class="fas fa-heart"></i>
+            </button>
         </div>
-        <div class="product-info">
-            <div class="product-name">${product.name}</div>
-            <div class="product-price">$${product.price.toFixed(2)}</div>
-            <div class="product-actions">
-                <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">
-                    Add to Cart
-                </button>
-            </div>
-            <div class="product-interactions">
-                <button class="like-btn" onclick="toggleLike('${product.id}')">
-                    <i class="fas fa-heart"></i>
-                    <span>${product.likes || 0}</span>
-                </button>
-                <button class="comment-btn" onclick="showProductModal('${product.id}')">
-                    <i class="fas fa-comment"></i>
-                    <span>${product.comments ? product.comments.length : 0}</span>
-                </button>
-            </div>
+        <div class="product-stats">
+            <span><i class="fas fa-heart"></i> ${product.likes || 0}</span>
+            <span><i class="fas fa-comment"></i> ${product.comments ? product.comments.length : 0}</span>
         </div>
     `
 
   return card
 }
 
-// Add to cart
+// Add product to cart
 window.addToCart = (productId) => {
-  const product = products.find((p) => p.id === productId)
-  if (product) {
-    const existingItem = cart.find((item) => item.id === productId)
-    if (existingItem) {
-      existingItem.quantity += 1
-    } else {
-      cart.push({ ...product, quantity: 1 })
-    }
-    updateCartUI()
-    showToast(`${product.name} added to cart!`)
-  }
-}
-
-// Update cart UI
-function updateCartUI() {
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
-  cartCount.textContent = totalItems
-}
-
-// Show cart
-function showCart() {
-  const cartItems = document.getElementById("cartItems")
-  const cartTotal = document.getElementById("cartTotal")
-
-  if (cart.length === 0) {
-    cartItems.innerHTML = '<p style="text-align: center; color: #64748b;">Your cart is empty</p>'
-    cartTotal.textContent = "0.00"
-  } else {
-    cartItems.innerHTML = ""
-    let total = 0
-
-    cart.forEach((item) => {
-      total += item.price * item.quantity
-      const cartItem = document.createElement("div")
-      cartItem.className = "cart-item"
-      cartItem.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
-                </div>
-                <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">
-                    Remove
-                </button>
-            `
-      cartItems.appendChild(cartItem)
-    })
-
-    cartTotal.textContent = total.toFixed(2)
-  }
-
-  cartModal.classList.add("active")
-}
-
-// Remove from cart
-window.removeFromCart = (productId) => {
-  cart = cart.filter((item) => item.id !== productId)
-  updateCartUI()
-  showCart() // Refresh cart display
-  showToast("Item removed from cart")
-}
-
-// Place order
-async function placeOrder() {
-  if (cart.length === 0) {
-    showToast("Your cart is empty", "error")
-    return
-  }
-
-  showLoading(true)
-
-  try {
-    const orderDetails = cart.map((item) => `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`).join("\n")
-
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-    const orderMessage = `🛒 New Order Placed!\n\n👤 Customer: ${currentUser.name}\n📱 Phone: ${currentUser.phone}\n\n📦 Order Details:\n${orderDetails}\n\n💰 Total: $${total.toFixed(2)}`
-
-    await sendToTelegram(orderMessage)
-
-    // Save order to Firebase
-    await addDoc(collection(window.db, "orders"), {
-      customer: currentUser,
-      items: cart,
-      total: total,
-      orderDate: new Date(),
-      status: "pending",
-    })
-
-    cart = []
-    updateCartUI()
-    cartModal.classList.remove("active")
-    showToast("Order placed successfully! We will contact you soon.")
-  } catch (error) {
-    console.error("Order error:", error)
-    showToast("Failed to place order. Please try again.", "error")
-  } finally {
-    showLoading(false)
-  }
-}
-
-// Toggle like
-window.toggleLike = async (productId) => {
-  try {
-    const productRef = doc(window.db, "products", productId)
-    await updateDoc(productRef, {
-      likes: increment(1),
-    })
-    showToast("Liked!")
-  } catch (error) {
-    console.error("Like error:", error)
-    showToast("Failed to like product", "error")
-  }
-}
-
-// Show product modal
-window.showProductModal = (productId) => {
   const product = products.find((p) => p.id === productId)
   if (!product) return
 
-  const productDetails = document.getElementById("productDetails")
-  productDetails.innerHTML = `
-        <div class="product-detail-grid">
-            <div class="product-detail-image">
-                <img src="${product.image}" alt="${product.name}">
-            </div>
-            <div class="product-detail-info">
-                <h2>${product.name}</h2>
-                <div class="product-detail-price">$${product.price.toFixed(2)}</div>
-                <div class="product-detail-description">${product.description}</div>
-                <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">
-                    Add to Cart
+  const existingItem = cart.find((item) => item.id === productId)
+
+  if (existingItem) {
+    existingItem.quantity += 1
+  } else {
+    cart.push({
+      id: productId,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    })
+  }
+
+  updateCartDisplay()
+  saveCartToStorage()
+
+  // Show brief animation or notification
+  showAddToCartNotification()
+}
+
+// Toggle product like
+window.toggleLike = async (productId) => {
+  try {
+    const productRef = doc(db, "products", productId)
+    await updateDoc(productRef, {
+      likes: increment(1),
+    })
+  } catch (error) {
+    console.error("Error updating likes:", error)
+  }
+}
+
+// Show add to cart notification
+function showAddToCartNotification() {
+  // Simple notification - you can enhance this
+  const notification = document.createElement("div")
+  notification.textContent = "Product added to cart!"
+  notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        z-index: 1000;
+        animation: slideIn 0.3s ease-out;
+    `
+
+  document.body.appendChild(notification)
+
+  setTimeout(() => {
+    notification.remove()
+  }, 3000)
+}
+
+// Toggle cart sidebar
+function toggleCart() {
+  cartSidebar.classList.toggle("open")
+  cartOverlay.classList.toggle("active")
+}
+
+// Update cart display
+function updateCartDisplay() {
+  // Update cart count
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
+  cartCount.textContent = totalItems
+
+  // Update cart items
+  cartItems.innerHTML = ""
+
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<p style="text-align: center; color: #666; padding: 40px 0;">Your cart is empty</p>'
+  } else {
+    cart.forEach((item) => {
+      const cartItem = createCartItem(item)
+      cartItems.appendChild(cartItem)
+    })
+  }
+
+  // Update total
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  cartTotal.textContent = total.toFixed(2)
+}
+
+// Create cart item element
+function createCartItem(item) {
+  const cartItem = document.createElement("div")
+  cartItem.className = "cart-item"
+
+  cartItem.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+        <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+            <div class="cart-item-controls">
+                <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                <button class="qty-btn" onclick="window.removeFromCart('${item.id}')" style="margin-left: 10px; color: #e91e63;">
+                    <i class="fas fa-trash"></i>
                 </button>
-                <div class="product-interactions" style="margin-top: 1rem;">
-                    <button class="like-btn" onclick="toggleLike('${product.id}')">
-                        <i class="fas fa-heart"></i>
-                        <span>${product.likes || 0}</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="comments-section">
-            <h3>Comments</h3>
-            <div class="comment-form">
-                <input type="text" class="comment-input" placeholder="Add a comment..." id="commentInput-${product.id}">
-                <button class="comment-submit" onclick="addComment('${product.id}')">Post</button>
-            </div>
-            <div class="comments-list" id="comments-${product.id}">
-                ${(product.comments || [])
-                  .map(
-                    (comment) => `
-                    <div class="comment">
-                        <div class="comment-author">${comment.author}</div>
-                        <div class="comment-text">${comment.text}</div>
-                    </div>
-                `,
-                  )
-                  .join("")}
             </div>
         </div>
     `
 
-  productModal.classList.add("active")
+  return cartItem
 }
 
-// Add comment
-window.addComment = async (productId) => {
-  const commentInput = document.getElementById(`commentInput-${productId}`)
-  const commentText = commentInput.value.trim()
+// Update item quantity
+window.updateQuantity = (productId, change) => {
+  const item = cart.find((item) => item.id === productId)
+  if (!item) return
 
-  if (!commentText) {
-    showToast("Please enter a comment", "error")
+  item.quantity += change
+
+  if (item.quantity <= 0) {
+    window.removeFromCart(productId)
+  } else {
+    updateCartDisplay()
+    saveCartToStorage()
+  }
+}
+
+// Remove item from cart
+window.removeFromCart = (productId) => {
+  cart = cart.filter((item) => item.id !== productId)
+  updateCartDisplay()
+  saveCartToStorage()
+}
+
+// Save cart to localStorage
+function saveCartToStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart))
+}
+
+// Load cart from localStorage
+function loadCartFromStorage() {
+  const savedCart = localStorage.getItem("cart")
+  if (savedCart) {
+    cart = JSON.parse(savedCart)
+    updateCartDisplay()
+  }
+}
+
+// Handle place order
+async function handlePlaceOrder() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!")
     return
   }
 
-  try {
-    const comment = {
-      author: currentUser.name,
-      text: commentText,
-      date: new Date(),
-    }
+  showLoadingSpinner()
 
-    const productRef = doc(window.db, "products", productId)
-    await updateDoc(productRef, {
-      comments: arrayUnion(comment),
+  try {
+    // Create order message for Telegram
+    let orderMessage = `🛒 New Order from ${currentUser.name}\n`
+    orderMessage += `📱 Phone: ${currentUser.phone}\n\n`
+    orderMessage += `📦 Order Details:\n`
+
+    let total = 0
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity
+      total += itemTotal
+      orderMessage += `${index + 1}. ${item.name}\n`
+      orderMessage += `   Qty: ${item.quantity} × $${item.price.toFixed(2)} = $${itemTotal.toFixed(2)}\n\n`
     })
 
-    commentInput.value = ""
-    showToast("Comment added!")
+    orderMessage += `💰 Total: $${total.toFixed(2)}`
+
+    // Send order to Telegram
+    await sendOrderToTelegram(orderMessage)
+
+    // Save order to Firebase
+    await addDoc(collection(db, "orders"), {
+      userId: currentUser.name,
+      userPhone: currentUser.phone,
+      items: cart,
+      total: total,
+      orderDate: new Date().toISOString(),
+      status: "pending",
+    })
+
+    // Clear cart
+    cart = []
+    updateCartDisplay()
+    saveCartToStorage()
+    toggleCart()
+
+    alert("Order placed successfully! We will contact you soon.")
   } catch (error) {
-    console.error("Comment error:", error)
-    showToast("Failed to add comment", "error")
+    console.error("Error placing order:", error)
+    alert("Failed to place order. Please try again.")
+  } finally {
+    hideLoadingSpinner()
   }
 }
 
-// Handle search
-function handleSearch(e) {
-  const searchTerm = e.target.value.toLowerCase()
-  const filteredProducts = products.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchTerm) ||
-      product.description.toLowerCase().includes(searchTerm) ||
-      product.category.toLowerCase().includes(searchTerm),
-  )
-  displayProducts(filteredProducts)
+// Send order to Telegram
+async function sendOrderToTelegram(message) {
+  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+
+  await fetch(telegramUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: message,
+      parse_mode: "HTML",
+    }),
+  })
 }
 
-// Show loading
-function showLoading(show) {
-  if (show) {
-    loading.classList.add("active")
-  } else {
-    loading.classList.remove("active")
-  }
+// Show loading spinner
+function showLoadingSpinner() {
+  loadingSpinner.style.display = "flex"
 }
 
-// Show toast notification
-function showToast(message, type = "success") {
-  toast.textContent = message
-  toast.className = `toast ${type}`
-  toast.classList.add("show")
-
-  setTimeout(() => {
-    toast.classList.remove("show")
-  }, 3000)
-}
+// Add CSS animation for notifications
+const style = document.createElement("style")
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+`
+document.head.appendChild(style)

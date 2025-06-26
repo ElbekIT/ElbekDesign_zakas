@@ -19,5 +19,4 @@ const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app)
 const db = getFirestore(app)
 
-// Export for use in other files
-window.db = db
+export { db }
