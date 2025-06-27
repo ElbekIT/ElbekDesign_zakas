@@ -4,7 +4,7 @@ let cart = []
 let products = []
 
 // Telegram Bot Configuration (replace with your bot token and chat ID)
-const TELEGRAM_BOT_TOKEN = "7557876194:AAHtiOEqq8aJaaIApVXkurm1lNwmJpEoKXo"
+const TELEGRAM_BOT_TOKEN = "8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw"
 const TELEGRAM_CHAT_ID = "7702025887"
 
 // Initialize the application

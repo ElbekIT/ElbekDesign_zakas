@@ -1,4 +1,4 @@
-// Telegram Bot Configuration
+// Telegram Bot Configuration (token va chat ID ni serverda saqlash tavsiya etiladi)
 const TELEGRAM_BOT_TOKEN = "8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw"
 const TELEGRAM_CHAT_ID = "7702025887"
 
@@ -15,14 +15,8 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
   e.preventDefault()
 
   const fullName = document.getElementById("fullName").value.trim()
-
-  if (!fullName) {
-    alert("Please enter your name")
-    return
-  }
-
-  if (fullName.length < 2) {
-    alert("Please enter a valid name")
+  if (!fullName || fullName.length < 2) {
+    alert("Iltimos, to'g'ri ism kiriting")
     return
   }
 
@@ -63,15 +57,11 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
     // Send registration notification to Telegram
     await sendRegistrationToTelegram(userData)
 
-    // Show success message
-    alert(`Welcome ${fullName}! Enjoy your premium shopping experience!`)
-
-    // Redirect to main page
+    alert(`Xush kelibsiz, ${fullName}! Premium shoppingdan bahramand bo'ling!`)
     window.location.href = "index.html"
   } catch (error) {
     console.error("Registration error:", error)
-    alert("Registration failed. Please try again.")
-
+    alert("Ro'yxatdan o'tishda xatolik. Qayta urinib ko'ring.")
     // Reset button state
     submitBtn.disabled = false
     btnText.style.display = "block"
@@ -81,12 +71,12 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
 
 // Send registration data to Telegram
 async function sendRegistrationToTelegram(userData) {
-  const message = `🎉 New User Registration!
+  const message = `🎉 Yangi foydalanuvchi ro'yxatdan o'tdi!
 
-👤 Name: ${userData.fullName}
-📅 Date: ${new Date(userData.registrationDate).toLocaleString()}
+👤 Ismi: ${userData.fullName}
+📅 Sana: ${new Date(userData.registrationDate).toLocaleString()}
 
-Welcome to NEXUS Store! 🛍️`
+NEXUS Store'ga xush kelibsiz! 🛍️`
 
   const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
 
@@ -102,11 +92,10 @@ Welcome to NEXUS Store! 🛍️`
         parse_mode: "HTML",
       }),
     })
-
     if (!response.ok) {
-      console.error("Failed to send registration notification to Telegram")
+      console.error("Telegramga yuborilmadi")
     }
   } catch (error) {
-    console.error("Error sending to Telegram:", error)
+    console.error("Telegramga yuborishda xatolik:", error)
   }
 }
