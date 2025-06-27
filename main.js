@@ -1329,7 +1329,7 @@ ${itemsList}
 ---
 Order from NEXUS Store 🏪`
 
-  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+  const telegramUrl = `https://api.telegram.org/bot8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw/sendMessage`
 
   const response = await fetch(telegramUrl, {
     method: "POST",
@@ -1337,7 +1337,7 @@ Order from NEXUS Store 🏪`
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
+      chat_id: 7702025887,
       text: message,
       parse_mode: "HTML",
     }),
@@ -1351,13 +1351,13 @@ Order from NEXUS Store 🏪`
   for (const item of orderData.items) {
     try {
       if (item.image && !item.image.includes("placeholder")) {
-        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+        await fetch(`https://api.telegram.org/bot8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw/sendPhoto`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
+            chat_id: 7702025887,
             photo: item.image,
             caption: `${item.title} - $${item.price} x${item.quantity}`,
           }),
@@ -1461,13 +1461,13 @@ async function sendAccountDeletionToTelegram() {
 Account has been permanently deleted from NEXUS Store.`
 
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw/sendMessage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
+        chat_id: 7702025887,
         text: message,
         parse_mode: "HTML",
       }),

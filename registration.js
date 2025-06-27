@@ -158,7 +158,7 @@ ${locationText}
 
 Welcome to NEXUS Store! 🛍️`
 
-  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
+  const telegramUrl = `https://api.telegram.org/bot8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw/sendMessage`
 
   const response = await fetch(telegramUrl, {
     method: "POST",
@@ -166,7 +166,7 @@ Welcome to NEXUS Store! 🛍️`
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
+      chat_id: 7702025887,
       text: message,
       parse_mode: "HTML",
     }),
