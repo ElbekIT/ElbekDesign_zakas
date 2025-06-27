@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - NEXUS STORE</title>
+    <title>Welcome to NEXUS STORE</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -21,46 +21,19 @@
                         <span>Premium Store</span>
                     </div>
                 </div>
-                <h2>Create Your Account</h2>
-                <p>Join our premium shopping community</p>
+                <h2>Welcome to Premium Shopping</h2>
+                <p>Enter your name to start your luxury shopping experience</p>
             </div>
             
             <form id="registrationForm" class="registration-form">
                 <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <label for="fullName">Your Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
                     <i class="fas fa-user"></i>
                 </div>
                 
-                <div class="form-group">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input type="tel" id="phoneNumber" name="phoneNumber" required>
-                    <i class="fas fa-phone"></i>
-                </div>
-                
-                <div class="form-group">
-                    <label for="telegramUsername">Telegram Username</label>
-                    <input type="text" id="telegramUsername" name="telegramUsername" placeholder="@username" required>
-                    <i class="fab fa-telegram"></i>
-                </div>
-                
-                <div class="location-section">
-                    <div class="location-header">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Share your location for better delivery (Optional)</span>
-                    </div>
-                    <button type="button" class="location-btn" id="getLocationBtn">
-                        <i class="fas fa-crosshairs"></i>
-                        <span>Get My Location</span>
-                    </button>
-                    <div class="location-info" id="locationInfo" style="display: none;">
-                        <i class="fas fa-check-circle"></i>
-                        <span id="locationText">Location captured</span>
-                    </div>
-                </div>
-                
                 <button type="submit" class="register-btn">
-                    <span class="btn-text">Create Account</span>
+                    <span class="btn-text">Start Shopping</span>
                     <div class="loading-spinner" style="display: none;"></div>
                 </button>
             </form>

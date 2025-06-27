@@ -4,7 +4,7 @@ let cart = []
 let products = []
 
 // Telegram Bot Configuration (replace with your bot token and chat ID)
-const TELEGRAM_BOT_TOKEN = "8122147889:AAFCQwTvyB9DuDm7qkXpjBFqjtWJKadmDlw"
+const TELEGRAM_BOT_TOKEN = "7557876194:AAHtiOEqq8aJaaIApVXkurm1lNwmJpEoKXo"
 const TELEGRAM_CHAT_ID = "7702025887"
 
 // Initialize the application
@@ -373,7 +373,7 @@ ${orderData.items.map((item) => `• ${item.name} x${item.quantity} - $${(item.p
 📅 *Date:* ${new Date(orderData.orderDate).toLocaleString()}
     `
 
-  const telegramUrl = `https://api.telegram.org/bot7557876194:AAHtiOEqq8aJaaIApVXkurm1lNwmJpEoKXo/sendMessage`
+  const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`
 
   const response = await fetch(telegramUrl, {
     method: "POST",
@@ -381,7 +381,7 @@ ${orderData.items.map((item) => `• ${item.name} x${item.quantity} - $${(item.p
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      chat_id: 7702025887,
+      chat_id: TELEGRAM_CHAT_ID,
       text: message,
       parse_mode: "Markdown",
     }),

@@ -41,7 +41,6 @@
                             <div class="user-welcome" id="userWelcome" style="display: none;">
                                 <span>Welcome, <span id="userName"></span></span>
                                 <button class="logout-btn" id="logoutBtn">Logout</button>
-                                <button class="delete-account-btn" id="deleteAccountBtn">Delete Account</button>
                             </div>
                             <div class="language-selector">
                                 <select>
@@ -99,11 +98,6 @@
                                 <span class="btn-text">Wishlist</span>
                             </button>
                             
-                            <button class="action-btn account-btn" id="accountBtn">
-                                <i class="far fa-user"></i>
-                                <span class="btn-text">Account</span>
-                            </button>
-                            
                             <button class="action-btn cart-btn" id="cartBtn">
                                 <i class="fas fa-shopping-bag"></i>
                                 <span class="badge" id="cartBadge">0</span>
@@ -136,12 +130,12 @@
                         
                         <ul class="nav-menu">
                             <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
-                            <li><a href="#all-categories" class="nav-link" data-section="all-categories">All Categories</a></li>
-                            <li><a href="#new-arrivals" class="nav-link" data-section="new-arrivals">New Arrivals</a></li>
-                            <li><a href="#best-sellers" class="nav-link" data-section="best-sellers">Best Sellers</a></li>
-                            <li><a href="#sale" class="nav-link" data-section="sale">Sale</a></li>
-                            <li><a href="#brands" class="nav-link" data-section="brands">Brands</a></li>
-                            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+                            <li><a href="#electronics" class="nav-link" data-filter="electronics">Electronics</a></li>
+                            <li><a href="#fashion" class="nav-link" data-filter="fashion">Fashion</a></li>
+                            <li><a href="#home-garden" class="nav-link" data-filter="home">Home & Garden</a></li>
+                            <li><a href="#beauty" class="nav-link" data-filter="beauty">Beauty</a></li>
+                            <li><a href="#sports" class="nav-link" data-filter="sports">Sports</a></li>
+                            <li><a href="#jewelry" class="nav-link" data-filter="jewelry">Jewelry</a></li>
                         </ul>
 
                         <div class="nav-promo">
@@ -156,651 +150,171 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Home Section -->
-        <section class="section active" id="home">
-            <!-- Hero Banner -->
-            <div class="hero-banner">
-                <div class="hero-background">
-                    <div class="hero-shape shape-1"></div>
-                    <div class="hero-shape shape-2"></div>
-                    <div class="hero-shape shape-3"></div>
-                </div>
-                
-                <div class="container">
-                    <div class="hero-content">
-                        <div class="hero-text">
-                            <div class="hero-badge">
-                                <span class="badge-icon">✨</span>
-                                <span>New Collection 2024</span>
-                            </div>
-                            <h1 class="hero-title">
-                                <span class="title-line">Discover</span>
-                                <span class="title-line gradient-text">Premium</span>
-                                <span class="title-line">Shopping</span>
-                            </h1>
-                            <p class="hero-description">
-                                Experience the finest collection of premium products, carefully curated for those who appreciate excellence and sophistication.
-                            </p>
-                            <div class="hero-actions">
-                                <button class="btn-primary hero-btn" onclick="scrollToProducts()">
-                                    <span>Shop Now</span>
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
-                                <button class="btn-secondary hero-btn">
-                                    <i class="fas fa-play"></i>
-                                    <span>Watch Video</span>
-                                </button>
-                            </div>
-                            <div class="hero-stats">
-                                <div class="stat-item">
-                                    <span class="stat-number" id="statCustomers">50K+</span>
-                                    <span class="stat-label">Happy Customers</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-number" id="statProducts">10K+</span>
-                                    <span class="stat-label">Premium Products</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-number" id="statSatisfaction">99%</span>
-                                    <span class="stat-label">Satisfaction Rate</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="hero-visual">
-                            <div class="hero-product-showcase">
-                                <div class="showcase-card card-1">
-                                    <img src="img/hero-product-1.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
-                                    <div class="card-overlay">
-                                        <span class="card-price">$299</span>
-                                        <span class="card-badge">Trending</span>
-                                    </div>
-                                </div>
-                                <div class="showcase-card card-2">
-                                    <img src="img/hero-product-2.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
-                                    <div class="card-overlay">
-                                        <span class="card-price">$199</span>
-                                        <span class="card-badge">New</span>
-                                    </div>
-                                </div>
-                                <div class="showcase-card card-3">
-                                    <img src="img/hero-product-3.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
-                                    <div class="card-overlay">
-                                        <span class="card-price">$399</span>
-                                        <span class="card-badge">Premium</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="scroll-indicator">
-                    <div class="scroll-mouse">
-                        <div class="scroll-wheel"></div>
-                    </div>
-                    <span class="scroll-text">Scroll to explore</span>
-                </div>
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-background">
+                <div class="hero-shape shape-1"></div>
+                <div class="hero-shape shape-2"></div>
+                <div class="hero-shape shape-3"></div>
             </div>
-
-            <!-- Features Section -->
-            <div class="features-section">
-                <div class="container">
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-shipping-fast"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h3>Free Worldwide Shipping</h3>
-                                <p>Complimentary shipping on all orders over $100</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-undo-alt"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h3>Easy Returns</h3>
-                                <p>30-day hassle-free return policy</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h3>Secure Payment</h3>
-                                <p>Your transactions are protected and encrypted</p>
-                            </div>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">
-                                <i class="fas fa-headset"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h3>24/7 Support</h3>
-                                <p>Premium customer service around the clock</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Products Section -->
-            <div class="products-section" id="products">
-                <div class="container">
-                    <div class="section-header">
-                        <div class="section-title">
-                            <span class="section-badge">Premium Collection</span>
-                            <h2>Featured Products</h2>
-                            <p>Discover our carefully curated selection of luxury items</p>
-                            <div class="likes-display">
-                                <i class="fas fa-heart"></i>
-                                <span id="totalLikes">0</span> Total Likes
-                            </div>
-                        </div>
-                        <div class="section-filters">
-                            <button class="filter-btn active" data-filter="all">All Products</button>
-                            <button class="filter-btn" data-filter="electronics">Electronics</button>
-                            <button class="filter-btn" data-filter="fashion">Fashion</button>
-                            <button class="filter-btn" data-filter="home">Home & Garden</button>
-                            <button class="filter-btn" data-filter="beauty">Beauty & Health</button>
-                            <button class="filter-btn" data-filter="sports">Sports & Outdoors</button>
-                            <button class="filter-btn" data-filter="jewelry">Jewelry</button>
-                        </div>
-                    </div>
-
-                    <div class="products-grid" id="productsGrid">
-                        <!-- Products will be dynamically loaded here -->
-                    </div>
-
-                    <div class="load-more-container">
-                        <button class="btn-secondary load-more-btn" id="loadMoreBtn">
-                            <span>Load More Products</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- All Categories Section -->
-        <section class="section" id="all-categories">
+            
             <div class="container">
-                <div class="page-header">
-                    <h1>All Categories</h1>
-                    <p>Browse our complete collection of premium products</p>
-                </div>
-                <div class="categories-grid">
-                    <div class="category-card" onclick="filterProducts('electronics')">
-                        <div class="category-image">
-                            <img src="img/category-electronics.jpg" alt="Electronics" onerror="this.src='/placeholder.svg?height=200&width=300'">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            <span class="badge-icon">✨</span>
+                            <span>New Collection 2024</span>
                         </div>
-                        <div class="category-info">
-                            <h3>Electronics</h3>
-                            <p>Latest gadgets and tech</p>
-                            <span class="product-count" id="electronicsCount">0 products</span>
-                        </div>
-                    </div>
-                    <div class="category-card" onclick="filterProducts('fashion')">
-                        <div class="category-image">
-                            <img src="img/category-fashion.jpg" alt="Fashion" onerror="this.src='/placeholder.svg?height=200&width=300'">
-                        </div>
-                        <div class="category-info">
-                            <h3>Fashion</h3>
-                            <p>Trendy clothing and accessories</p>
-                            <span class="product-count" id="fashionCount">0 products</span>
-                        </div>
-                    </div>
-                    <div class="category-card" onclick="filterProducts('home')">
-                        <div class="category-image">
-                            <img src="img/category-home.jpg" alt="Home & Garden" onerror="this.src='/placeholder.svg?height=200&width=300'">
-                        </div>
-                        <div class="category-info">
-                            <h3>Home & Garden</h3>
-                            <p>Beautiful home essentials</p>
-                            <span class="product-count" id="homeCount">0 products</span>
-                        </div>
-                    </div>
-                    <div class="category-card" onclick="filterProducts('beauty')">
-                        <div class="category-image">
-                            <img src="img/category-beauty.jpg" alt="Beauty & Health" onerror="this.src='/placeholder.svg?height=200&width=300'">
-                        </div>
-                        <div class="category-info">
-                            <h3>Beauty & Health</h3>
-                            <p>Premium skincare and wellness</p>
-                            <span class="product-count" id="beautyCount">0 products</span>
-                        </div>
-                    </div>
-                    <div class="category-card" onclick="filterProducts('sports')">
-                        <div class="category-image">
-                            <img src="img/category-sports.jpg" alt="Sports & Outdoors" onerror="this.src='/placeholder.svg?height=200&width=300'">
-                        </div>
-                        <div class="category-info">
-                            <h3>Sports & Outdoors</h3>
-                            <p>Active lifestyle gear</p>
-                            <span class="product-count" id="sportsCount">0 products</span>
-                        </div>
-                    </div>
-                    <div class="category-card" onclick="filterProducts('jewelry')">
-                        <div class="category-image">
-                            <img src="img/category-jewelry.jpg" alt="Jewelry" onerror="this.src='/placeholder.svg?height=200&width=300'">
-                        </div>
-                        <div class="category-info">
-                            <h3>Jewelry</h3>
-                            <p>Elegant accessories</p>
-                            <span class="product-count" id="jewelryCount">0 products</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- New Arrivals Section -->
-        <section class="section" id="new-arrivals">
-            <div class="container">
-                <div class="page-header">
-                    <h1>New Arrivals</h1>
-                    <p>Discover the latest additions to our premium collection</p>
-                </div>
-                <div class="products-grid" id="newArrivalsGrid">
-                    <!-- New arrivals products will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Best Sellers Section -->
-        <section class="section" id="best-sellers">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Best Sellers</h1>
-                    <p>Our most popular products loved by customers worldwide</p>
-                </div>
-                <div class="products-grid" id="bestSellersGrid">
-                    <!-- Best sellers products will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Sale Section -->
-        <section class="section" id="sale">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Special Sale</h1>
-                    <p>Amazing deals and discounts on premium products</p>
-                </div>
-                <div class="products-grid" id="saleGrid">
-                    <!-- Sale products will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Brands Section -->
-        <section class="section" id="brands">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Our Brands</h1>
-                    <p>Explore products from world-renowned brands</p>
-                </div>
-                <div class="brands-grid">
-                    <div class="brand-card">
-                        <img src="/placeholder.svg?height=100&width=200" alt="Brand 1">
-                        <h3>Premium Tech</h3>
-                        <p>Leading technology brand</p>
-                    </div>
-                    <div class="brand-card">
-                        <img src="/placeholder.svg?height=100&width=200" alt="Brand 2">
-                        <h3>Luxury Fashion</h3>
-                        <p>High-end fashion collection</p>
-                    </div>
-                    <div class="brand-card">
-                        <img src="/placeholder.svg?height=100&width=200" alt="Brand 3">
-                        <h3>Elite Home</h3>
-                        <p>Premium home essentials</p>
-                    </div>
-                    <div class="brand-card">
-                        <img src="/placeholder.svg?height=100&width=200" alt="Brand 4">
-                        <h3>Beauty Pro</h3>
-                        <p>Professional beauty products</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section" id="contact">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Contact Us</h1>
-                    <p>Get in touch with our customer service team</p>
-                </div>
-                <div class="contact-content">
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <h3>Address</h3>
-                                <p>123 Premium Street, Luxury District, City 12345</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <h3>Phone</h3>
-                                <p>+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <h3>Email</h3>
-                                <p>support@nexusstore.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- Account Section -->
-        <section class="section" id="account">
-            <div class="container">
-                <div class="page-header">
-                    <h1>My Account</h1>
-                    <p>Manage your account settings and preferences</p>
-                </div>
-                <div class="account-content">
-                    <div class="account-sidebar">
-                        <div class="account-menu">
-                            <button class="account-menu-item active" data-tab="profile">
-                                <i class="fas fa-user"></i>
-                                Profile Information
+                        <h1 class="hero-title">
+                            <span class="title-line">Discover</span>
+                            <span class="title-line gradient-text">Premium</span>
+                            <span class="title-line">Shopping</span>
+                        </h1>
+                        <p class="hero-description">
+                            Experience the finest collection of premium products, carefully curated for those who appreciate excellence and sophistication.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn-primary hero-btn" onclick="scrollToProducts()">
+                                <span>Shop Now</span>
+                                <i class="fas fa-arrow-right"></i>
                             </button>
-                            <button class="account-menu-item" data-tab="orders">
-                                <i class="fas fa-shopping-bag"></i>
-                                Order History
-                            </button>
-                            <button class="account-menu-item" data-tab="wishlist">
-                                <i class="fas fa-heart"></i>
-                                My Wishlist
-                            </button>
-                            <button class="account-menu-item" data-tab="settings">
-                                <i class="fas fa-cog"></i>
-                                Settings
+                            <button class="btn-secondary hero-btn">
+                                <i class="fas fa-play"></i>
+                                <span>Watch Video</span>
                             </button>
                         </div>
-                    </div>
-                    <div class="account-main">
-                        <div class="account-tab active" id="profile">
-                            <h3>Profile Information</h3>
-                            <div class="profile-info" id="profileInfo">
-                                <!-- Profile info will be loaded here -->
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">50K+</span>
+                                <span class="stat-label">Happy Customers</span>
                             </div>
-                        </div>
-                        <div class="account-tab" id="orders">
-                            <h3>Order History</h3>
-                            <div class="orders-list" id="ordersList">
-                                <p>No orders found.</p>
+                            <div class="stat-item">
+                                <span class="stat-number">10K+</span>
+                                <span class="stat-label">Premium Products</span>
                             </div>
-                        </div>
-                        <div class="account-tab" id="wishlist-tab">
-                            <h3>My Wishlist</h3>
-                            <div class="wishlist-grid" id="wishlistGrid">
-                                <!-- Wishlist items will be loaded here -->
-                            </div>
-                        </div>
-                        <div class="account-tab" id="settings">
-                            <h3>Account Settings</h3>
-                            <div class="settings-options">
-                                <button class="btn-danger" id="deleteAccountConfirm">
-                                    <i class="fas fa-trash"></i>
-                                    Delete Account
-                                </button>
+                            <div class="stat-item">
+                                <span class="stat-number">99%</span>
+                                <span class="stat-label">Satisfaction Rate</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer Sections -->
-        <section class="section" id="about">
-            <div class="container">
-                <div class="page-header">
-                    <h1>About Us</h1>
-                    <p>Learn more about our company and mission</p>
-                </div>
-                <div class="content-section">
-                    <p>NEXUS Store is a premium e-commerce platform dedicated to providing the finest selection of luxury products. We curate each item with care, ensuring our customers receive only the best quality merchandise.</p>
-                    <p>Founded in 2024, we have quickly become a trusted name in online retail, serving customers worldwide with exceptional products and outstanding service.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="size-guide">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Size Guide</h1>
-                    <p>Find your perfect fit with our comprehensive sizing charts</p>
-                </div>
-                <div class="content-section">
-                    <h3>Clothing Sizes</h3>
-                    <table class="size-table">
-                        <thead>
-                            <tr>
-                                <th>Size</th>
-                                <th>Chest (inches)</th>
-                                <th>Waist (inches)</th>
-                                <th>Hip (inches)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>XS</td>
-                                <td>32-34</td>
-                                <td>26-28</td>
-                                <td>34-36</td>
-                            </tr>
-                            <tr>
-                                <td>S</td>
-                                <td>34-36</td>
-                                <td>28-30</td>
-                                <td>36-38</td>
-                            </tr>
-                            <tr>
-                                <td>M</td>
-                                <td>36-38</td>
-                                <td>30-32</td>
-                                <td>38-40</td>
-                            </tr>
-                            <tr>
-                                <td>L</td>
-                                <td>38-40</td>
-                                <td>32-34</td>
-                                <td>40-42</td>
-                            </tr>
-                            <tr>
-                                <td>XL</td>
-                                <td>40-42</td>
-                                <td>34-36</td>
-                                <td>42-44</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="shipping">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Shipping Information</h1>
-                    <p>Everything you need to know about our shipping policies</p>
-                </div>
-                <div class="content-section">
-                    <h3>Shipping Options</h3>
-                    <ul>
-                        <li><strong>Standard Shipping:</strong> 5-7 business days - Free on orders over $100</li>
-                        <li><strong>Express Shipping:</strong> 2-3 business days - $15.99</li>
-                        <li><strong>Overnight Shipping:</strong> Next business day - $29.99</li>
-                    </ul>
-                    <h3>International Shipping</h3>
-                    <p>We ship worldwide! International shipping times vary by destination, typically 7-14 business days.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="returns">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Returns & Exchanges</h1>
-                    <p>Our hassle-free return policy</p>
-                </div>
-                <div class="content-section">
-                    <h3>Return Policy</h3>
-                    <p>We offer a 30-day return policy for all items in original condition. Items must be unworn, unwashed, and with original tags attached.</p>
-                    <h3>How to Return</h3>
-                    <ol>
-                        <li>Contact our customer service team</li>
-                        <li>Receive your return authorization</li>
-                        <li>Package items securely</li>
-                        <li>Ship using provided return label</li>
-                    </ol>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="faq">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Frequently Asked Questions</h1>
-                    <p>Find answers to common questions</p>
-                </div>
-                <div class="content-section">
-                    <div class="faq-item">
-                        <h3>How long does shipping take?</h3>
-                        <p>Standard shipping takes 5-7 business days, while express shipping takes 2-3 business days.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>What is your return policy?</h3>
-                        <p>We offer a 30-day return policy for items in original condition.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h3>Do you ship internationally?</h3>
-                        <p>Yes, we ship worldwide with delivery times of 7-14 business days.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="help">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Help Center</h1>
-                    <p>Get the support you need</p>
-                </div>
-                <div class="content-section">
-                    <div class="help-categories">
-                        <div class="help-category">
-                            <h3>Order Support</h3>
-                            <p>Questions about your order, tracking, or delivery</p>
-                        </div>
-                        <div class="help-category">
-                            <h3>Product Information</h3>
-                            <p>Details about our products, sizing, and availability</p>
-                        </div>
-                        <div class="help-category">
-                            <h3>Account Help</h3>
-                            <p>Managing your account, password, and preferences</p>
+                    
+                    <div class="hero-visual">
+                        <div class="hero-product-showcase">
+                            <div class="showcase-card card-1">
+                                <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                <div class="card-overlay">
+                                    <span class="card-price">$299</span>
+                                    <span class="card-badge">Trending</span>
+                                </div>
+                            </div>
+                            <div class="showcase-card card-2">
+                                <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                <div class="card-overlay">
+                                    <span class="card-price">$199</span>
+                                    <span class="card-badge">New</span>
+                                </div>
+                            </div>
+                            <div class="showcase-card card-3">
+                                <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                <div class="card-overlay">
+                                    <span class="card-price">$399</span>
+                                    <span class="card-badge">Premium</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="section" id="track">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Track Your Order</h1>
-                    <p>Enter your order number to track your shipment</p>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
                 </div>
-                <div class="content-section">
-                    <form class="tracking-form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Enter your order number" required>
+                <span class="scroll-text">Scroll to explore</span>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
                         </div>
-                        <button type="submit" class="btn-primary">Track Order</button>
-                    </form>
+                        <div class="feature-content">
+                            <h3>Free Worldwide Shipping</h3>
+                            <p>Complimentary shipping on all orders over $100</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Easy Returns</h3>
+                            <p>30-day hassle-free return policy</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>Secure Payment</h3>
+                            <p>Your transactions are protected and encrypted</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h3>24/7 Support</h3>
+                            <p>Premium customer service around the clock</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="section" id="corporate">
+        <!-- Products Section -->
+        <div class="products-section" id="products">
             <div class="container">
-                <div class="page-header">
-                    <h1>Corporate Sales</h1>
-                    <p>Bulk orders and business solutions</p>
+                <div class="section-header">
+                    <div class="section-title">
+                        <span class="section-badge">Premium Collection</span>
+                        <h2>Featured Products</h2>
+                        <p>Discover our carefully curated selection of luxury items</p>
+                        <div class="likes-display">
+                            <i class="fas fa-heart"></i>
+                            <span id="totalLikes">0</span> Total Likes
+                        </div>
+                    </div>
+                    <div class="section-filters">
+                        <button class="filter-btn active" data-filter="all">All Products</button>
+                        <button class="filter-btn" data-filter="electronics">Electronics</button>
+                        <button class="filter-btn" data-filter="fashion">Fashion</button>
+                        <button class="filter-btn" data-filter="home">Home & Garden</button>
+                        <button class="filter-btn" data-filter="beauty">Beauty & Health</button>
+                        <button class="filter-btn" data-filter="sports">Sports & Outdoors</button>
+                        <button class="filter-btn" data-filter="jewelry">Jewelry</button>
+                    </div>
                 </div>
-                <div class="content-section">
-                    <p>We offer special pricing and services for corporate clients, including bulk orders, custom branding, and dedicated account management.</p>
-                    <p>Contact our corporate sales team at corporate@nexusstore.com for more information.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="section" id="privacy">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Privacy Policy</h1>
-                    <p>How we protect and use your information</p>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be dynamically loaded here -->
                 </div>
-                <div class="content-section">
-                    <p>Your privacy is important to us. This policy explains how we collect, use, and protect your personal information when you use our services.</p>
-                    <h3>Information We Collect</h3>
-                    <p>We collect information you provide directly, such as when you create an account, make a purchase, or contact us.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="section" id="terms">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Terms of Service</h1>
-                    <p>Terms and conditions for using our service</p>
-                </div>
-                <div class="content-section">
-                    <p>By using our website, you agree to these terms and conditions. Please read them carefully.</p>
-                    <h3>Use of Service</h3>
-                    <p>You may use our service for lawful purposes only and in accordance with these terms.</p>
+                <div class="load-more-container">
+                    <button class="btn-secondary load-more-btn" id="loadMoreBtn">
+                        <span>Load More Products</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
                 </div>
             </div>
-        </section>
-
-        <section class="section" id="accessibility">
-            <div class="container">
-                <div class="page-header">
-                    <h1>Accessibility</h1>
-                    <p>Our commitment to accessibility</p>
-                </div>
-                <div class="content-section">
-                    <p>We are committed to ensuring our website is accessible to all users, including those with disabilities.</p>
-                    <p>If you encounter any accessibility issues, please contact us at accessibility@nexusstore.com</p>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
     <!-- Shopping Cart Modal -->
@@ -848,7 +362,6 @@
                 </div>
                 
                 <div class="cart-actions">
-                    <button class="btn-secondary view-cart">View Cart</button>
                     <button class="btn-primary checkout-btn" id="checkoutBtn">
                         <span>Checkout</span>
                         <i class="fas fa-lock"></i>
@@ -881,26 +394,6 @@
                 <div class="wishlist-items" id="wishlistItems">
                     <!-- Wishlist items will be populated here -->
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Location Modal -->
-    <div class="location-modal" id="locationModal">
-        <div class="location-overlay"></div>
-        <div class="location-content">
-            <div class="location-header">
-                <h3>Share Your Location</h3>
-                <p>Help us provide better delivery estimates</p>
-            </div>
-            <div class="location-actions">
-                <button class="btn-primary" id="shareLocationBtn">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Share Location
-                </button>
-                <button class="btn-secondary" id="skipLocationBtn">
-                    Skip for Now
-                </button>
             </div>
         </div>
     </div>
@@ -948,12 +441,12 @@
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#" onclick="showSection('about')">About Us</a></li>
-                        <li><a href="#" onclick="showSection('contact')">Contact</a></li>
-                        <li><a href="#" onclick="showSection('size-guide')">Size Guide</a></li>
-                        <li><a href="#" onclick="showSection('shipping')">Shipping Info</a></li>
-                        <li><a href="#" onclick="showSection('returns')">Returns</a></li>
-                        <li><a href="#" onclick="showSection('faq')">FAQ</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
                 
@@ -972,12 +465,12 @@
                 <div class="footer-section">
                     <h4>Customer Service</h4>
                     <ul>
-                        <li><a href="#" onclick="showSection('help')">Help Center</a></li>
-                        <li><a href="#" onclick="showSection('track')">Track Your Order</a></li>
-                        <li><a href="#" onclick="showSection('corporate')">Corporate Sales</a></li>
-                        <li><a href="#" onclick="showSection('privacy')">Privacy Policy</a></li>
-                        <li><a href="#" onclick="showSection('terms')">Terms of Service</a></li>
-                        <li><a href="#" onclick="showSection('accessibility')">Accessibility</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                        <li><a href="#">Corporate Sales</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Accessibility</a></li>
                     </ul>
                 </div>
             </div>
