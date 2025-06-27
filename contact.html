@@ -3,61 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopMagazina - Premium Online Store</title>
+    <title>Contact Us - ShopMagazina</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Registration Modal -->
-    <div id="registrationModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header">
-                <h2>Welcome to ShopMagazina</h2>
-                <p>Please register to start shopping</p>
-            </div>
-            <form id="registrationForm">
-                <div class="form-group">
-                    <input type="text" id="fullName" placeholder="Full Name" required>
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="telegramUsername" placeholder="Telegram Username (optional)">
-                    <i class="fab fa-telegram"></i>
-                </div>
-                <button type="submit" class="register-btn">
-                    <span>Register & Start Shopping</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content cart-modal">
-            <span class="close cart-close">&times;</span>
-            <div class="modal-header">
-                <h2><i class="fas fa-shopping-cart"></i> Shopping Cart</h2>
-            </div>
-            <div id="cartItems" class="cart-items-container"></div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <h3>Total: $<span id="cartTotal">0.00</span></h3>
-                </div>
-                <button id="checkoutBtn" class="checkout-btn">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Proceed to Checkout</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -95,112 +46,111 @@
             </div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
                     <li><a href="categories.html"><i class="fas fa-th-large"></i> All Categories</a></li>
                     <li><a href="new-arrivals.html"><i class="fas fa-star"></i> New Arrivals</a></li>
                     <li><a href="best-sellers.html"><i class="fas fa-fire"></i> Best Sellers</a></li>
                     <li><a href="sale.html"><i class="fas fa-tags"></i> Sale</a></li>
                     <li><a href="brands.html"><i class="fas fa-crown"></i> Brands</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="hero-banner">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Discover Premium Products</h1>
-                <p>Shop the latest trends with unbeatable prices and premium quality</p>
-                <div class="hero-buttons">
-                    <button class="cta-btn primary">Shop Now</button>
-                    <button class="cta-btn secondary">View Categories</button>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="/placeholder.svg?height=500&width=600" alt="Premium Shopping">
-            </div>
-        </div>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-shipping-fast"></i>
-                <span>Free Shipping</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-undo"></i>
-                <span>Easy Returns</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-shield-alt"></i>
-                <span>Secure Payment</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-headset"></i>
-                <span>24/7 Support</span>
-            </div>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-envelope"></i> Contact Us</h1>
+            <p>We're here to help you with any questions or concerns</p>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
+    <!-- Contact Section -->
+    <section class="contact-section">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>50K+</h3>
-                        <p>Happy Customers</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Phone</h4>
+                                <p>+1 (555) 123-4567</p>
+                                <span>Mon-Fri 9AM-6PM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Email</h4>
+                                <p>support@shopmagazina.com</p>
+                                <span>24/7 Support</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Address</h4>
+                                <p>123 Shopping Street</p>
+                                <span>City, State 12345</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Business Hours</h4>
+                                <p>Mon-Fri: 9AM-6PM</p>
+                                <span>Sat-Sun: 10AM-4PM</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>10K+</h3>
-                        <p>Premium Products</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>99%</h3>
-                        <p>Satisfaction Rate</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="products-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Featured Products</h2>
-                <p>Discover our handpicked selection of premium products</p>
-            </div>
-            <div class="products-grid" id="productsGrid">
-                <!-- Products will be loaded here by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-content">
-                <div class="newsletter-text">
-                    <h3>Stay Updated</h3>
-                    <p>Get the latest deals and new arrivals directly to your inbox</p>
-                </div>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Enter your email address">
-                    <button>Subscribe</button>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <h3>Send us a Message</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" required>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" required>
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required>
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="6" required></textarea>
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
