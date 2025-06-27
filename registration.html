@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - NEXUS Store</title>
+    <link rel="stylesheet" href="styles/registration.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="registration-card">
+            <div class="logo">
+                <h1>NEXUS Store</h1>
+                <p>Welcome! Please register to continue</p>
+            </div>
+            
+            <form id="registrationForm" class="registration-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="Enter your phone number">
+                </div>
+                
+                <button type="submit" class="register-btn">
+                    <span class="btn-text">Register</span>
+                    <div class="loading-spinner" style="display: none;"></div>
+                </button>
+            </form>
+            
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-icon">🛍️</span>
+                    <span>Premium Products</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🚚</span>
+                    <span>Fast Delivery</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💳</span>
+                    <span>Secure Payment</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, push, set } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDlyb188VfYALM8FfjhoN5NAH80uIUIaMk",
+            authDomain: "shopmagazina-988f7.firebaseapp.com",
+            databaseURL: "https://shopmagazina-988f7-default-rtdb.firebaseio.com",
+            projectId: "shopmagazina-988f7",
+            storageBucket: "shopmagazina-988f7.firebasestorage.app",
+            messagingSenderId: "455847708477",
+            appId: "1:455847708477:web:1282e7a719bd4f8314e754",
+            measurementId: "G-P943SCYXTT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Make Firebase available globally
+        window.database = database;
+        window.firebaseModules = {
+            ref,
+            push,
+            set
+        };
+    </script>
+    <script src="js/registration.js"></script>
+</body>
+</html>

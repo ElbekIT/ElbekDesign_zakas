@@ -3,267 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopMagazina - Premium Online Store</title>
+    <title>NEXUS STORE - Future of Shopping</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <!-- Registration Modal -->
-    <div id="registrationModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-header">
-                <h2>Welcome to ShopMagazina</h2>
-                <p>Please register to start shopping</p>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-shape"></div>
+                <span class="logo-text">NEXUS</span>
             </div>
-            <form id="registrationForm">
-                <div class="form-group">
-                    <input type="text" id="fullName" placeholder="Full Name" required>
-                    <i class="fas fa-user"></i>
+            <div class="loading-progress">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Navigation -->
+    <nav class="floating-nav" id="floatingNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <div class="icon-shape"></div>
                 </div>
-                <div class="form-group">
-                    <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
-                    <i class="fas fa-phone"></i>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="telegramUsername" placeholder="Telegram Username (optional)">
-                    <i class="fab fa-telegram"></i>
-                </div>
-                <button type="submit" class="register-btn">
-                    <span>Register & Start Shopping</span>
+                <span class="logo-text">NEXUS</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="search-toggle" id="searchToggle">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="cart-toggle" id="cartToggle">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" placeholder="Search for amazing products..." id="searchInput">
+                <button class="search-btn" id="searchBtn">
                     <i class="fas fa-arrow-right"></i>
                 </button>
-            </form>
+            </div>
+            <button class="search-close" id="searchClose">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
     </div>
 
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content cart-modal">
-            <span class="close cart-close">&times;</span>
-            <div class="modal-header">
-                <h2><i class="fas fa-shopping-cart"></i> Shopping Cart</h2>
-            </div>
-            <div id="cartItems" class="cart-items-container"></div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <h3>Total: $<span id="cartTotal">0.00</span></h3>
-                </div>
-                <button id="checkoutBtn" class="checkout-btn">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Proceed to Checkout</span>
-                </button>
-            </div>
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-background">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
         </div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-top">
-                <div class="logo">
-                    <h1><i class="fas fa-store"></i> ShopMagazina</h1>
-                    <span>Premium Shopping Experience</span>
-                </div>
-                <div class="search-container">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search for products, brands, categories...">
-                        <button><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <div class="user-info">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="userWelcome">Welcome, Guest</span>
-                    </div>
-                    <button class="action-btn wishlist-btn" onclick="window.location.href='wishlist.html'">
-                        <i class="fas fa-heart"></i>
-                        <span class="badge" id="wishlistCount">0</span>
-                        <span class="tooltip">Wishlist</span>
-                    </button>
-                    <button class="action-btn cart-btn" id="cartBtn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge" id="cartCount">0</span>
-                        <span class="tooltip">Cart</span>
-                    </button>
-                    <button class="action-btn account-btn" onclick="window.location.href='account.html'">
-                        <i class="fas fa-user-cog"></i>
-                        <span class="tooltip">Account</span>
-                    </button>
-                </div>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="categories.html"><i class="fas fa-th-large"></i> All Categories</a></li>
-                    <li><a href="new-arrivals.html"><i class="fas fa-star"></i> New Arrivals</a></li>
-                    <li><a href="best-sellers.html"><i class="fas fa-fire"></i> Best Sellers</a></li>
-                    <li><a href="sale.html"><i class="fas fa-tags"></i> Sale</a></li>
-                    <li><a href="brands.html"><i class="fas fa-crown"></i> Brands</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Banner -->
-    <section class="hero-banner">
+        
         <div class="hero-content">
             <div class="hero-text">
-                <h1>Discover Premium Products</h1>
-                <p>Shop the latest trends with unbeatable prices and premium quality</p>
-                <div class="hero-buttons">
-                    <button class="cta-btn primary">Shop Now</button>
-                    <button class="cta-btn secondary">View Categories</button>
+                <div class="hero-badge">
+                    <span>✨ New Collection 2024</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">Future of</span>
+                    <span class="title-line gradient-text">Shopping</span>
+                    <span class="title-line">Experience</span>
+                </h1>
+                <p class="hero-description">
+                    Discover extraordinary products with cutting-edge design. 
+                    Where innovation meets style in perfect harmony.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-primary hero-btn" onclick="scrollToProducts()">
+                        <span>Explore Products</span>
+                        <i class="fas fa-rocket"></i>
+                    </button>
+                    <button class="btn-secondary hero-btn">
+                        <i class="fas fa-play"></i>
+                        <span>Watch Demo</span>
+                    </button>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="/placeholder.svg?height=500&width=600" alt="Premium Shopping">
+            
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <img src="img/hero-product-1.jpg" alt="Product 1" onerror="this.src='/placeholder.svg?height=200&width=200'">
+                    <div class="card-info">
+                        <span class="card-price">$299</span>
+                        <span class="card-badge">Hot</span>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <img src="img/hero-product-2.jpg" alt="Product 2" onerror="this.src='/placeholder.svg?height=200&width=200'">
+                    <div class="card-info">
+                        <span class="card-price">$199</span>
+                        <span class="card-badge">New</span>
+                    </div>
+                </div>
+                <div class="floating-card card-3">
+                    <img src="img/hero-product-3.jpg" alt="Product 3" onerror="this.src='/placeholder.svg?height=200&width=200'">
+                    <div class="card-info">
+                        <span class="card-price">$399</span>
+                        <span class="card-badge">Pro</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="hero-features">
-            <div class="feature">
-                <i class="fas fa-shipping-fast"></i>
-                <span>Free Shipping</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-undo"></i>
-                <span>Easy Returns</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-shield-alt"></i>
-                <span>Secure Payment</span>
-            </div>
-            <div class="feature">
-                <i class="fas fa-headset"></i>
-                <span>24/7 Support</span>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span class="scroll-text">Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Lightning Fast Delivery</h3>
+                    <p>Get your products delivered in record time with our premium shipping network.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Protected</h3>
+                    <p>Your data and payments are protected with military-grade encryption.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Premium Quality</h3>
+                    <p>Every product is carefully curated and tested for exceptional quality.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our expert team is always ready to help you with any questions.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Stats Section -->
     <section class="stats-section">
-        <div class="container">
+        <div class="section-container">
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>50K+</h3>
-                        <p>Happy Customers</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-stat="customers">50K+</div>
+                    <div class="stat-label">Happy Customers</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>10K+</h3>
-                        <p>Premium Products</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-stat="products">10K+</div>
+                    <div class="stat-label">Premium Products</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>99%</h3>
-                        <p>Satisfaction Rate</p>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-stat="satisfaction">99%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section class="products-section">
-        <div class="container">
+    <section class="products-section" id="products">
+        <div class="section-container">
             <div class="section-header">
-                <h2>Featured Products</h2>
-                <p>Discover our handpicked selection of premium products</p>
+                <div class="section-title">
+                    <h2>Featured Products</h2>
+                    <p>Discover our handpicked collection of extraordinary items</p>
+                </div>
+                <div class="section-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="electronics">Electronics</button>
+                    <button class="filter-btn" data-filter="fashion">Fashion</button>
+                    <button class="filter-btn" data-filter="home">Home</button>
+                    <button class="filter-btn" data-filter="beauty">Beauty</button>
+                </div>
             </div>
+            
             <div class="products-grid" id="productsGrid">
-                <!-- Products will be loaded here by JavaScript -->
+                <!-- Products will be dynamically loaded here -->
             </div>
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
-        <div class="container">
-            <div class="newsletter-content">
-                <div class="newsletter-text">
-                    <h3>Stay Updated</h3>
-                    <p>Get the latest deals and new arrivals directly to your inbox</p>
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-overlay" onclick="toggleCart()"></div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="cart-close" onclick="toggleCart()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="cart-body" id="cartBody">
+                <div class="empty-cart" id="emptyCart">
+                    <div class="empty-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h4>Your cart is empty</h4>
+                    <p>Add some amazing products to get started!</p>
                 </div>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Enter your email address">
-                    <button>Subscribe</button>
+                
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be populated here -->
                 </div>
             </div>
+            
+            <div class="cart-footer" id="cartFooter">
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span id="cartShipping">Free</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="cartTotal">$0.00</span>
+                    </div>
+                </div>
+                
+                <button class="checkout-btn" id="checkoutBtn">
+                    <span>Proceed to Checkout</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="notification-icon"></i>
+            <span class="notification-text"></span>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#size-guide">Size Guide</a></li>
-                        <li><a href="#shipping">Shipping Info</a></li>
-                        <li><a href="#returns">Returns</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Categories</h3>
-                    <ul>
-                        <li><a href="categories.html">Electronics</a></li>
-                        <li><a href="categories.html">Fashion</a></li>
-                        <li><a href="categories.html">Home & Garden</a></li>
-                        <li><a href="categories.html">Beauty & Health</a></li>
-                        <li><a href="categories.html">Sports & Outdoors</a></li>
-                        <li><a href="categories.html">Jewelry</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Customer Service</h3>
-                    <ul>
-                        <li><a href="#help">Help Center</a></li>
-                        <li><a href="#track">Track Your Order</a></li>
-                        <li><a href="#corporate">Corporate Sales</a></li>
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#terms">Terms of Service</a></li>
-                        <li><a href="#accessibility">Accessibility</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Connect With Us</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+        <div class="footer-background">
+            <div class="footer-shape shape-1"></div>
+            <div class="footer-shape shape-2"></div>
+        </div>
+        
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <div class="logo-icon">
+                        <div class="icon-shape"></div>
                     </div>
-                    <div class="contact-info">
-                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
-                        <p><i class="fas fa-envelope"></i> support@shopmagazina.com</p>
-                    </div>
+                    <span class="logo-text">NEXUS</span>
+                </div>
+                <p>Redefining the future of online shopping with innovative design and exceptional user experience.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 ShopMagazina. All rights reserved. | Made with ❤️ for premium shopping</p>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
             </div>
+            
+            <div class="footer-section">
+                <h4>Categories</h4>
+                <ul>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Fashion</a></li>
+                    <li><a href="#">Home & Garden</a></li>
+                    <li><a href="#">Beauty</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Stay updated with our latest products and offers</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nexus Store. All rights reserved.</p>
         </div>
     </footer>
 
-    <script type="module" src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
