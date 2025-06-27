@@ -19,7 +19,7 @@ const products = [
     category: "electronics",
     price: 299.99,
     originalPrice: 399.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product1.jpg",
     badge: "Best Seller",
     rating: 4.8,
     reviews: 1247,
@@ -36,7 +36,7 @@ const products = [
     category: "electronics",
     price: 199.99,
     originalPrice: 249.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product2.jpg",
     badge: "New",
     rating: 4.6,
     reviews: 892,
@@ -52,7 +52,7 @@ const products = [
     category: "fashion",
     price: 159.99,
     originalPrice: 199.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product3.jpg",
     badge: "Sale",
     rating: 4.9,
     reviews: 456,
@@ -68,7 +68,7 @@ const products = [
     category: "electronics",
     price: 899.99,
     originalPrice: 1099.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product4.jpg",
     badge: "Pro",
     rating: 4.7,
     reviews: 234,
@@ -84,7 +84,7 @@ const products = [
     category: "beauty",
     price: 89.99,
     originalPrice: 119.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product5.jpg",
     badge: "Popular",
     rating: 4.5,
     reviews: 678,
@@ -100,7 +100,7 @@ const products = [
     category: "electronics",
     price: 79.99,
     originalPrice: 99.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product6.jpg",
     badge: "Smart",
     rating: 4.4,
     reviews: 345,
@@ -116,7 +116,7 @@ const products = [
     category: "home",
     price: 599.99,
     originalPrice: 799.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product7.jpg",
     badge: "Luxury",
     rating: 4.8,
     reviews: 123,
@@ -132,7 +132,7 @@ const products = [
     category: "electronics",
     price: 129.99,
     originalPrice: 159.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product8.jpg",
     badge: "Gaming",
     rating: 4.7,
     reviews: 567,
@@ -148,7 +148,7 @@ const products = [
     category: "fashion",
     price: 29.99,
     originalPrice: 39.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product9.jpg",
     badge: "Eco",
     rating: 4.3,
     reviews: 789,
@@ -164,7 +164,7 @@ const products = [
     category: "home",
     price: 49.99,
     originalPrice: 69.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product10.jpg",
     badge: "Wellness",
     rating: 4.6,
     reviews: 432,
@@ -180,7 +180,7 @@ const products = [
     category: "jewelry",
     price: 799.99,
     originalPrice: 999.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product11.jpg",
     badge: "Premium",
     rating: 4.9,
     reviews: 234,
@@ -196,7 +196,7 @@ const products = [
     category: "sports",
     price: 59.99,
     originalPrice: 79.99,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "img/product12.jpg",
     badge: "Fitness",
     rating: 4.4,
     reviews: 567,
@@ -248,7 +248,7 @@ const totalLikesElement = document.getElementById("totalLikes")
 // Initialize the application
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
-    document.getElementById("loadingScreen").classList.add("hidden")
+    loadingScreen.classList.add("hidden")
     initializeApp()
   }, 2500)
 })
@@ -264,8 +264,6 @@ async function initializeApp() {
   currentUser = JSON.parse(userData)
 
   // Show user welcome
-  const userWelcome = document.getElementById("userWelcome")
-  const userName = document.getElementById("userName")
   if (userWelcome && userName) {
     userName.textContent = currentUser.fullName
     userWelcome.style.display = "flex"
@@ -284,6 +282,7 @@ async function initializeApp() {
 
   // Initialize event listeners
   initializeEventListeners()
+  initializeScrollEffects()
 
   // Initialize Firebase listeners
   initializeFirebaseListeners()
@@ -309,33 +308,47 @@ function initializeEventListeners() {
     })
   })
 
+  // Account menu
+  document.querySelectorAll(".account-menu-item").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      const tab = e.target.dataset.tab
+      if (tab) {
+        showAccountTab(tab)
+        updateActiveAccountTab(e.target)
+      }
+    })
+  })
+
   // Logout
-  const logoutBtn = document.getElementById("logoutBtn")
   if (logoutBtn) {
     logoutBtn.addEventListener("click", logout)
   }
 
+  // Delete account
+  if (deleteAccountBtn) {
+    deleteAccountBtn.addEventListener("click", showDeleteAccountConfirmation)
+  }
+
+  // Delete account confirmation
+  const deleteAccountConfirm = document.getElementById("deleteAccountConfirm")
+  if (deleteAccountConfirm) {
+    deleteAccountConfirm.addEventListener("click", deleteAccount)
+  }
+
   // Cart functionality
-  const cartBtn = document.getElementById("cartBtn")
   if (cartBtn) {
     cartBtn.addEventListener("click", toggleCart)
   }
-
-  const checkoutBtn = document.getElementById("checkoutBtn")
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", handleCheckout)
   }
 
   // Wishlist functionality
-  const wishlistBtn = document.getElementById("wishlistBtn")
   if (wishlistBtn) {
     wishlistBtn.addEventListener("click", toggleWishlist)
   }
 
   // Search functionality
-  const searchBtn = document.getElementById("searchBtn")
-  const searchInput = document.getElementById("searchInput")
-
   if (searchBtn) {
     searchBtn.addEventListener("click", handleSearch)
   }
@@ -357,15 +370,11 @@ function initializeEventListeners() {
   })
 
   // Load more button
-  const loadMoreBtn = document.getElementById("loadMoreBtn")
   if (loadMoreBtn) {
     loadMoreBtn.addEventListener("click", loadMoreProducts)
   }
 
   // Location sharing
-  const shareLocationBtn = document.getElementById("shareLocationBtn")
-  const skipLocationBtn = document.getElementById("skipLocationBtn")
-
   if (shareLocationBtn) {
     shareLocationBtn.addEventListener("click", shareLocation)
   }
@@ -414,10 +423,6 @@ function initializeEventListeners() {
   // Close overlays on escape key
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      const cartModal = document.getElementById("cartModal")
-      const wishlistModal = document.getElementById("wishlistModal")
-      const locationModal = document.getElementById("locationModal")
-
       if (cartModal && cartModal.classList.contains("active")) {
         toggleCart()
       }
@@ -554,6 +559,11 @@ function showSection(sectionId) {
   if (targetSection) {
     targetSection.classList.add("active")
   }
+
+  // Update account section if needed
+  if (sectionId === "account") {
+    loadAccountData()
+  }
 }
 
 function updateActiveNavLink(activeLink) {
@@ -561,6 +571,93 @@ function updateActiveNavLink(activeLink) {
     link.classList.remove("active")
   })
   activeLink.classList.add("active")
+}
+
+function showAccountTab(tabId) {
+  // Hide all tabs
+  document.querySelectorAll(".account-tab").forEach((tab) => {
+    tab.classList.remove("active")
+  })
+
+  // Show target tab
+  const targetTab = document.getElementById(tabId === "wishlist" ? "wishlist-tab" : tabId)
+  if (targetTab) {
+    targetTab.classList.add("active")
+  }
+
+  // Load specific tab data
+  if (tabId === "wishlist") {
+    loadWishlistTab()
+  }
+}
+
+function updateActiveAccountTab(activeTab) {
+  document.querySelectorAll(".account-menu-item").forEach((item) => {
+    item.classList.remove("active")
+  })
+  activeTab.classList.add("active")
+}
+
+// Load account data
+function loadAccountData() {
+  if (!currentUser) return
+
+  const profileInfo = document.getElementById("profileInfo")
+  if (profileInfo) {
+    profileInfo.innerHTML = `
+      <div class="profile-card">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="profile-details">
+          <h4>${currentUser.fullName}</h4>
+          <p><i class="fas fa-phone"></i> ${currentUser.phoneNumber}</p>
+          <p><i class="fab fa-telegram"></i> ${currentUser.telegramUsername}</p>
+          ${currentUser.location ? `<p><i class="fas fa-map-marker-alt"></i> Location shared</p>` : ""}
+          <p><i class="fas fa-calendar"></i> Member since ${new Date(currentUser.registrationDate).toLocaleDateString()}</p>
+        </div>
+      </div>
+    `
+  }
+}
+
+// Load wishlist tab
+function loadWishlistTab() {
+  const wishlistGrid = document.getElementById("wishlistGrid")
+  if (!wishlistGrid) return
+
+  if (wishlist.length === 0) {
+    wishlistGrid.innerHTML = `
+      <div class="empty-state">
+        <i class="far fa-heart"></i>
+        <h4>Your wishlist is empty</h4>
+        <p>Start adding products to your wishlist</p>
+      </div>
+    `
+  } else {
+    wishlistGrid.innerHTML = wishlist
+      .map((item) => {
+        const product = products.find((p) => p.id === item.id)
+        if (!product) return ""
+
+        return `
+          <div class="wishlist-product-card">
+            <div class="product-image">
+              <img src="${product.image}" alt="${product.title}" onerror="this.src='/placeholder.svg?height=200&width=200'">
+            </div>
+            <div class="product-info">
+              <h4>${product.title}</h4>
+              <p class="product-price">$${product.price}</p>
+              <div class="product-actions">
+                <button class="btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+                <button class="btn-secondary" onclick="toggleWishlistItem(${product.id})">Remove</button>
+              </div>
+            </div>
+          </div>
+        `
+      })
+      .join("")
+  }
 }
 
 // Scroll to products section
@@ -576,7 +673,6 @@ function scrollToProducts() {
 
 // Handle search
 function handleSearch() {
-  const searchInput = document.getElementById("searchInput")
   const query = searchInput.value.trim().toLowerCase()
   if (!query) return
 
@@ -617,7 +713,6 @@ function updateCategoryCounts() {
 
 // Render products
 function renderProducts() {
-  const productsGrid = document.getElementById("productsGrid")
   if (!productsGrid) return
 
   const filteredProducts =
@@ -628,7 +723,6 @@ function renderProducts() {
   productsGrid.innerHTML = productsToShow.map((product) => createProductCard(product)).join("")
 
   // Show/hide load more button
-  const loadMoreBtn = document.getElementById("loadMoreBtn")
   if (loadMoreBtn) {
     loadMoreBtn.style.display = displayedProducts >= filteredProducts.length ? "none" : "inline-flex"
   }
@@ -645,21 +739,18 @@ function renderProducts() {
 // Render section-specific products
 function renderSectionProducts() {
   // New Arrivals
-  const newArrivalsGrid = document.getElementById("newArrivalsGrid")
   if (newArrivalsGrid) {
     const newProducts = products.filter((product) => product.isNew)
     newArrivalsGrid.innerHTML = newProducts.map((product) => createProductCard(product)).join("")
   }
 
   // Best Sellers
-  const bestSellersGrid = document.getElementById("bestSellersGrid")
   if (bestSellersGrid) {
     const bestSellers = products.filter((product) => product.isBestSeller)
     bestSellersGrid.innerHTML = bestSellers.map((product) => createProductCard(product)).join("")
   }
 
   // Sale Products
-  const saleGrid = document.getElementById("saleGrid")
   if (saleGrid) {
     const saleProducts = products.filter((product) => product.isOnSale)
     saleGrid.innerHTML = saleProducts.map((product) => createProductCard(product)).join("")
@@ -668,12 +759,10 @@ function renderSectionProducts() {
 
 // Render filtered products
 function renderFilteredProducts(filteredProducts) {
-  const productsGrid = document.getElementById("productsGrid")
   if (!productsGrid) return
 
   productsGrid.innerHTML = filteredProducts.map((product) => createProductCard(product)).join("")
 
-  const loadMoreBtn = document.getElementById("loadMoreBtn")
   if (loadMoreBtn) {
     loadMoreBtn.style.display = "none"
   }
@@ -688,7 +777,7 @@ function createProductCard(product) {
   return `
     <div class="product-card" data-product-id="${product.id}">
       <div class="product-image">
-        <img src="${product.image}" alt="${product.title}">
+        <img src="${product.image}" alt="${product.title}" onerror="this.src='/placeholder.svg?height=300&width=300'">
         <div class="product-badge">${product.badge}</div>
         <div class="product-actions">
           <button class="action-btn-small" onclick="quickView(${product.id})">
@@ -918,7 +1007,6 @@ async function updateTotalLikes() {
     const total = products.reduce((sum, product) => sum + (product.likes || 0), 0)
     totalLikes = total
 
-    const totalLikesElement = document.getElementById("totalLikes")
     if (totalLikesElement) {
       totalLikesElement.textContent = total.toLocaleString()
     }
@@ -931,15 +1019,6 @@ async function updateTotalLikes() {
 function updateCartUI() {
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-  const cartBadge = document.getElementById("cartBadge")
-  const cartTotal = document.getElementById("cartTotal")
-  const emptyCart = document.getElementById("emptyCart")
-  const cartItems = document.getElementById("cartItems")
-  const cartFooter = document.getElementById("cartFooter")
-  const cartSubtotal = document.getElementById("cartSubtotal")
-  const cartShipping = document.getElementById("cartShipping")
-  const cartTotalAmount = document.getElementById("cartTotalAmount")
 
   if (cartBadge) cartBadge.textContent = totalItems
   if (cartTotal) cartTotal.textContent = `$${totalPrice.toFixed(2)}`
@@ -959,7 +1038,7 @@ function updateCartUI() {
           (item) => `
           <div class="cart-item">
             <div class="cart-item-image">
-              <img src="${item.image}" alt="${item.title}">
+              <img src="${item.image}" alt="${item.title}" onerror="this.src='/placeholder.svg?height=80&width=80'">
             </div>
             <div class="cart-item-details">
               <div class="cart-item-title">${item.title}</div>
@@ -996,10 +1075,6 @@ function updateCartUI() {
 
 // Update wishlist UI
 function updateWishlistUI() {
-  const wishlistBadge = document.getElementById("wishlistBadge")
-  const emptyWishlist = document.getElementById("emptyWishlist")
-  const wishlistItems = document.getElementById("wishlistItems")
-
   if (wishlistBadge) {
     wishlistBadge.textContent = wishlist.length
   }
@@ -1020,7 +1095,7 @@ function updateWishlistUI() {
           return `
             <div class="wishlist-item">
               <div class="wishlist-item-image">
-                <img src="${item.image}" alt="${item.title}">
+                <img src="${item.image}" alt="${item.title}" onerror="this.src='/placeholder.svg?height=80&width=80'">
               </div>
               <div class="wishlist-item-details">
                 <div class="wishlist-item-title">${item.title}</div>
@@ -1063,7 +1138,6 @@ function updateStats() {
 
 // Toggle cart modal
 function toggleCart() {
-  const cartModal = document.getElementById("cartModal")
   if (cartModal) {
     cartModal.classList.toggle("active")
     document.body.style.overflow = cartModal.classList.contains("active") ? "hidden" : ""
@@ -1072,7 +1146,6 @@ function toggleCart() {
 
 // Toggle wishlist modal
 function toggleWishlist() {
-  const wishlistModal = document.getElementById("wishlistModal")
   if (wishlistModal) {
     wishlistModal.classList.toggle("active")
     document.body.style.overflow = wishlistModal.classList.contains("active") ? "hidden" : ""
@@ -1097,7 +1170,6 @@ async function handleCheckout() {
 
 // Show location modal
 function showLocationModal() {
-  const locationModal = document.getElementById("locationModal")
   if (locationModal) {
     locationModal.classList.add("active")
   }
@@ -1105,7 +1177,6 @@ function showLocationModal() {
 
 // Close location modal
 function closeLocationModal() {
-  const locationModal = document.getElementById("locationModal")
   if (locationModal) {
     locationModal.classList.remove("active")
   }
@@ -1173,7 +1244,6 @@ async function updateUserLocationInFirebase() {
 async function processCheckout() {
   try {
     // Show loading state
-    const checkoutBtn = document.getElementById("checkoutBtn")
     if (checkoutBtn) {
       checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Processing...</span>'
       checkoutBtn.disabled = true
@@ -1207,7 +1277,6 @@ async function processCheckout() {
     showNotification("Failed to place order. Please try again.", "error")
   } finally {
     // Reset button state
-    const checkoutBtn = document.getElementById("checkoutBtn")
     if (checkoutBtn) {
       checkoutBtn.innerHTML = '<span>Checkout</span><i class="fas fa-lock"></i>'
       checkoutBtn.disabled = false
@@ -1277,6 +1346,27 @@ Order from NEXUS Store 🏪`
   if (!response.ok) {
     throw new Error("Failed to send order to Telegram")
   }
+
+  // Send product images if available
+  for (const item of orderData.items) {
+    try {
+      if (item.image && !item.image.includes("placeholder")) {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            photo: item.image,
+            caption: `${item.title} - $${item.price} x${item.quantity}`,
+          }),
+        })
+      }
+    } catch (error) {
+      console.error("Error sending product image:", error)
+    }
+  }
 }
 
 // Quick view function
@@ -1308,9 +1398,87 @@ function logout() {
   window.location.href = "registration.html"
 }
 
+// Show delete account confirmation
+function showDeleteAccountConfirmation() {
+  const confirmed = confirm(
+    "Are you sure you want to delete your account? This action cannot be undone and will remove all your data including wishlist and order history.",
+  )
+
+  if (confirmed) {
+    const doubleConfirm = confirm(
+      "This is your final warning. Are you absolutely sure you want to delete your account?",
+    )
+
+    if (doubleConfirm) {
+      deleteAccount()
+    }
+  }
+}
+
+// Delete account
+async function deleteAccount() {
+  try {
+    // Delete from Firebase
+    if (window.db && window.firebaseModules && currentUser.firebaseId) {
+      const { doc, deleteDoc } = window.firebaseModules
+
+      // Delete user document
+      await deleteDoc(doc(window.db, "users", currentUser.firebaseId))
+
+      // Delete user's wishlist
+      try {
+        await deleteDoc(doc(window.db, "wishlists", currentUser.id))
+      } catch (error) {
+        console.log("No wishlist to delete")
+      }
+    }
+
+    // Send deletion notification to Telegram
+    await sendAccountDeletionToTelegram()
+
+    // Clear local storage
+    localStorage.removeItem("userData")
+    localStorage.removeItem("nexusCart")
+    localStorage.removeItem("nexusWishlist")
+
+    alert("Your account has been successfully deleted.")
+    window.location.href = "registration.html"
+  } catch (error) {
+    console.error("Error deleting account:", error)
+    showNotification("Failed to delete account. Please try again.", "error")
+  }
+}
+
+// Send account deletion notification to Telegram
+async function sendAccountDeletionToTelegram() {
+  const message = `❌ Account Deleted
+
+👤 User: ${currentUser.fullName}
+📱 Phone: ${currentUser.phoneNumber}
+💬 Telegram: ${currentUser.telegramUsername}
+📅 Deleted: ${new Date().toLocaleString()}
+
+Account has been permanently deleted from NEXUS Store.`
+
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: "HTML",
+      }),
+    })
+  } catch (error) {
+    console.error("Error sending deletion notification:", error)
+  }
+}
+
 // Show notification
 function showNotification(message, type = "success") {
-  const notification = document.getElementById("notification")
   const notificationIcon = notification.querySelector(".notification-icon")
   const notificationText = notification.querySelector(".notification-text")
 
@@ -1334,6 +1502,94 @@ function showNotification(message, type = "success") {
 
 // Hide notification
 function hideNotification() {
-  const notification = document.getElementById("notification")
   if (notification) notification.classList.remove("show")
 }
+
+// Initialize scroll effects
+function initializeScrollEffects() {
+  let lastScrollTop = 0
+  const header = document.getElementById("header")
+
+  window.addEventListener("scroll", () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+    // Header hide/show on scroll
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      if (header) header.style.transform = "translateY(-100%)"
+    } else {
+      if (header) header.style.transform = "translateY(0)"
+    }
+
+    lastScrollTop = scrollTop
+
+    // Add scroll-to-top button
+    if (scrollTop > 500) {
+      if (!document.querySelector(".scroll-to-top")) {
+        const scrollBtn = document.createElement("button")
+        scrollBtn.className = "scroll-to-top"
+        scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>'
+        scrollBtn.style.cssText = `
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 60px;
+          height: 60px;
+          background: var(--gradient-primary);
+          color: white;
+          border: none;
+          border-radius: var(--radius-full);
+          cursor: pointer;
+          font-size: 1.25rem;
+          box-shadow: var(--shadow-xl);
+          z-index: 1000;
+          transition: all var(--transition-normal);
+        `
+
+        scrollBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        })
+
+        scrollBtn.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-5px)"
+          this.style.boxShadow = "var(--shadow-2xl)"
+        })
+
+        scrollBtn.addEventListener("mouseleave", function () {
+          this.style.transform = "translateY(0)"
+          this.style.boxShadow = "var(--shadow-xl)"
+        })
+
+        document.body.appendChild(scrollBtn)
+      }
+    } else {
+      const scrollBtn = document.querySelector(".scroll-to-top")
+      if (scrollBtn) {
+        scrollBtn.remove()
+      }
+    }
+  })
+}
+
+// Performance optimization - Intersection Observer for animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px",
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("animate-fadeIn")
+      observer.unobserve(entry.target)
+    }
+  })
+}, observerOptions)
+
+// Observe elements for animation
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.querySelectorAll(".feature-card, .product-card, .category-card, .brand-card").forEach((el) => {
+      observer.observe(el)
+    })
+  }, 3000)
+})

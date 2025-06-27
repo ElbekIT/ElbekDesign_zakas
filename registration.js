@@ -26,7 +26,7 @@ document.getElementById("registrationForm").addEventListener("submit", async (e)
   }
 
   // Validate phone number (basic validation)
-  const phoneRegex = /^[+]?[1-9][\d]{0,15}$/
+  const phoneRegex = /^\+?[1-9]\d{7,14}$/
   if (!phoneRegex.test(phoneNumber)) {
     alert("Please enter a valid phone number")
     return
@@ -124,9 +124,9 @@ document.getElementById("getLocationBtn").addEventListener("click", () => {
 
 // Phone number formatting
 document.getElementById("phoneNumber").addEventListener("input", (e) => {
-  let value = e.target.value.replace(/\D/g, "")
-  if (value.length > 0 && !value.startsWith("+")) {
-    value = "+" + value
+  let value = e.target.value.replace(/[^\d+]/g, "")
+  if (value.length > 0 && value[0] !== "+") {
+    value = "+" + value.replace(/^\+/, "")
   }
   e.target.value = value
 })
@@ -134,9 +134,11 @@ document.getElementById("phoneNumber").addEventListener("input", (e) => {
 // Telegram username formatting
 document.getElementById("telegramUsername").addEventListener("input", (e) => {
   let value = e.target.value
-  if (value.length > 0 && !value.startsWith("@")) {
-    value = "@" + value
+  if (value.length > 0 && value[0] !== "@") {
+    value = "@" + value.replace(/^@+/, "")
   }
+  // Remove spaces
+  value = value.replace(/\s/g, "")
   e.target.value = value
 })
 

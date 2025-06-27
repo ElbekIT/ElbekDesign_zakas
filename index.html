@@ -41,6 +41,7 @@
                             <div class="user-welcome" id="userWelcome" style="display: none;">
                                 <span>Welcome, <span id="userName"></span></span>
                                 <button class="logout-btn" id="logoutBtn">Logout</button>
+                                <button class="delete-account-btn" id="deleteAccountBtn">Delete Account</button>
                             </div>
                             <div class="language-selector">
                                 <select>
@@ -209,21 +210,21 @@
                         <div class="hero-visual">
                             <div class="hero-product-showcase">
                                 <div class="showcase-card card-1">
-                                    <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                    <img src="img/hero-product-1.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
                                     <div class="card-overlay">
                                         <span class="card-price">$299</span>
                                         <span class="card-badge">Trending</span>
                                     </div>
                                 </div>
                                 <div class="showcase-card card-2">
-                                    <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                    <img src="img/hero-product-2.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
                                     <div class="card-overlay">
                                         <span class="card-price">$199</span>
                                         <span class="card-badge">New</span>
                                     </div>
                                 </div>
                                 <div class="showcase-card card-3">
-                                    <img src="/placeholder.svg?height=300&width=300" alt="Premium Product">
+                                    <img src="img/hero-product-3.jpg" alt="Premium Product" onerror="this.src='/placeholder.svg?height=300&width=300'">
                                     <div class="card-overlay">
                                         <span class="card-price">$399</span>
                                         <span class="card-badge">Premium</span>
@@ -334,7 +335,7 @@
                 <div class="categories-grid">
                     <div class="category-card" onclick="filterProducts('electronics')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Electronics">
+                            <img src="img/category-electronics.jpg" alt="Electronics" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Electronics</h3>
@@ -344,7 +345,7 @@
                     </div>
                     <div class="category-card" onclick="filterProducts('fashion')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Fashion">
+                            <img src="img/category-fashion.jpg" alt="Fashion" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Fashion</h3>
@@ -354,7 +355,7 @@
                     </div>
                     <div class="category-card" onclick="filterProducts('home')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Home & Garden">
+                            <img src="img/category-home.jpg" alt="Home & Garden" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Home & Garden</h3>
@@ -364,7 +365,7 @@
                     </div>
                     <div class="category-card" onclick="filterProducts('beauty')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Beauty & Health">
+                            <img src="img/category-beauty.jpg" alt="Beauty & Health" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Beauty & Health</h3>
@@ -374,7 +375,7 @@
                     </div>
                     <div class="category-card" onclick="filterProducts('sports')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Sports & Outdoors">
+                            <img src="img/category-sports.jpg" alt="Sports & Outdoors" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Sports & Outdoors</h3>
@@ -384,7 +385,7 @@
                     </div>
                     <div class="category-card" onclick="filterProducts('jewelry')">
                         <div class="category-image">
-                            <img src="/placeholder.svg?height=200&width=300" alt="Jewelry">
+                            <img src="img/category-jewelry.jpg" alt="Jewelry" onerror="this.src='/placeholder.svg?height=200&width=300'">
                         </div>
                         <div class="category-info">
                             <h3>Jewelry</h3>
@@ -510,6 +511,67 @@
                         </div>
                         <button type="submit" class="btn-primary">Send Message</button>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Section -->
+        <section class="section" id="account">
+            <div class="container">
+                <div class="page-header">
+                    <h1>My Account</h1>
+                    <p>Manage your account settings and preferences</p>
+                </div>
+                <div class="account-content">
+                    <div class="account-sidebar">
+                        <div class="account-menu">
+                            <button class="account-menu-item active" data-tab="profile">
+                                <i class="fas fa-user"></i>
+                                Profile Information
+                            </button>
+                            <button class="account-menu-item" data-tab="orders">
+                                <i class="fas fa-shopping-bag"></i>
+                                Order History
+                            </button>
+                            <button class="account-menu-item" data-tab="wishlist">
+                                <i class="fas fa-heart"></i>
+                                My Wishlist
+                            </button>
+                            <button class="account-menu-item" data-tab="settings">
+                                <i class="fas fa-cog"></i>
+                                Settings
+                            </button>
+                        </div>
+                    </div>
+                    <div class="account-main">
+                        <div class="account-tab active" id="profile">
+                            <h3>Profile Information</h3>
+                            <div class="profile-info" id="profileInfo">
+                                <!-- Profile info will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="account-tab" id="orders">
+                            <h3>Order History</h3>
+                            <div class="orders-list" id="ordersList">
+                                <p>No orders found.</p>
+                            </div>
+                        </div>
+                        <div class="account-tab" id="wishlist-tab">
+                            <h3>My Wishlist</h3>
+                            <div class="wishlist-grid" id="wishlistGrid">
+                                <!-- Wishlist items will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="account-tab" id="settings">
+                            <h3>Account Settings</h3>
+                            <div class="settings-options">
+                                <button class="btn-danger" id="deleteAccountConfirm">
+                                    <i class="fas fa-trash"></i>
+                                    Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
